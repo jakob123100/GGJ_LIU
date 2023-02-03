@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PathFindToPlayer : StateMachineBehaviour
@@ -20,7 +21,11 @@ public class PathFindToPlayer : StateMachineBehaviour
 		Cell enemyCell = Grid.Instance.GetCellFromWorldPoint(animator.transform.position);
 		goalCell = Grid.Instance.GetCellFromWorldPoint(CharacterControls.Instance.transform.position);
 
-		path = AStar<Cell>.PathFind(grid, weightMap, enemyCell.GridX, enemyCell.GridY, goalCell.GridX, goalCell.GridY);
+        var result = await Task.Run(() =>
+        {
+			path = AStar<Cell>.PathFind(grid, weightMap, enemyCell.GridX, enemyCell.GridY, goalCell.GridX, goalCell.GridY);
+            return path;
+		});
 
         if(path.Length <= 1)
         {

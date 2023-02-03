@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CharacterControls : MonoBehaviour
 {
-    #region SingleTon
-    public CharacterControls Instance;
+    #region Singleton
+    public static CharacterControls Instance;
 
 	private void OnEnable()
 	{

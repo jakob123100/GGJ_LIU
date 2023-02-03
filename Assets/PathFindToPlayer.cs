@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class PathFindToPlayer : StateMachineBehaviour
 {
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    Cell[,] grid;
+
+	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // Find Path
+        grid = Grid.Instance.GetCellGrid();
+        float[,] weightMap = Grid.Instance.GetWeightMap();
 
+        AStar<Cell>.PathFind(grid, weightMap, 0, 0, 10, 10);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -16,6 +21,7 @@ public class PathFindToPlayer : StateMachineBehaviour
     {
         // is path valid? else get new path
         // walk along path
+
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

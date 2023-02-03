@@ -51,6 +51,13 @@ public class Grid : MonoBehaviour
 	private float cellDiameter;
 	private int gridSizeX, gridSizeY;
 
+	public Cell[,] GetCellGrid()
+	{
+		return grid;
+	}
+
+	public float[,] GetWeightMap() { return weightMap; }
+
 	private void CreateGrid()
 	{
 		cellDiameter = cellRadius * 2;

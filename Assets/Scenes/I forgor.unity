@@ -419,7 +419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &1378498483
 Animator:
   serializedVersion: 5
@@ -679,9 +679,10 @@ GameObject:
   - component: {fileID: 1974190680}
   - component: {fileID: 1974190685}
   - component: {fileID: 1974190684}
+  - component: {fileID: 1974190686}
   m_Layer: 0
   m_Name: GMAER
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -799,7 +800,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &1974190685
 MonoBehaviour:
@@ -815,6 +816,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 10
   cam: {fileID: 2131084686}
+--- !u!114 &1974190686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974190679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa33b28a1b4bcf489ce7c36522fcbf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  health: 0
 --- !u!1 &2016485156
 GameObject:
   m_ObjectHideFlags: 0
@@ -914,7 +929,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016485156}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.77, z: 0}
+  m_LocalPosition: {x: 0, y: -1.16, z: 0}
   m_LocalScale: {x: 10, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []

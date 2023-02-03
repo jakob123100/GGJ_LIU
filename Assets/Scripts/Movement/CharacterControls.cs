@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterControls : MonoBehaviour
 {
     #region Singleton
-    public static CharacterControls Instance;
+    [HideInInspector] public static CharacterControls Instance;
 
 	private void OnEnable()
 	{

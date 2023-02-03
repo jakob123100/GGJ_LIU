@@ -4,24 +4,67 @@ using UnityEngine;
 
 public class PathFindToPlayer : StateMachineBehaviour
 {
+    Cell goalCell = null;
     Cell[,] grid;
+    Cell[] path;
+    int pathIndex = -1;
+    float speed = 10f;
+    float closeEnough = 0.2f;
+    float maxPlayerGoalDist = 2;
+
+    private async void findPath(Animator animator)
+    {
+		grid = Grid.Instance.GetCellGrid();
+		float[,] weightMap = Grid.Instance.GetWeightMap();
+
+		Cell enemyCell = Grid.Instance.GetCellFromWorldPoint(animator.transform.position);
+		goalCell = Grid.Instance.GetCellFromWorldPoint(CharacterControls.Instance.transform.position);
+
+		path = AStar<Cell>.PathFind(grid, weightMap, enemyCell.GridX, enemyCell.GridY, goalCell.GridX, goalCell.GridY);
+
+        if(path.Length <= 1)
+        {
+            pathIndex = -1;
+            return;
+        }
+
+        pathIndex = 1;
+	}
 
 	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // Find Path
-        grid = Grid.Instance.GetCellGrid();
-        float[,] weightMap = Grid.Instance.GetWeightMap();
-
-        AStar<Cell>.PathFind(grid, weightMap, 0, 0, 10, 10);
+        findPath(animator);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // is path valid? else get new path
-        // walk along path
+        if(goalCell == null || Vector3.Distance(CharacterControls.Instance.transform.position, goalCell.WorldPos) > maxPlayerGoalDist)
+        {
+            findPath(animator);
+        }
 
+        if(pathIndex == -1)
+        {
+            return;
+        }
+
+		// walk along path
+		animator.transform.position = Vector3.MoveTowards(animator.transform.position, path[pathIndex].WorldPos, speed * Time.deltaTime);
+        if(Vector3.Distance(animator.transform.position, path[pathIndex].WorldPos) < closeEnough)
+        {
+            pathIndex++;
+        }
+
+        // Are we there?
+        if(pathIndex >= path.Length)
+        {
+            goalCell = null;
+            pathIndex = -1;
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

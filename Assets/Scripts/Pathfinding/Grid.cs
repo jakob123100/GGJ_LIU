@@ -117,8 +117,8 @@ public class Grid : MonoBehaviour
 				Gizmos.DrawCube(cell.WorldPos, Vector3.one * (cellDiameter - 0.1f));
 			}*/
 
-			Cell fromCell = GetCellFromWorldPoint(from.position);
-			Cell toCell = GetCellFromWorldPoint(to.position);
+			//Cell fromCell = GetCellFromWorldPoint(from.position);
+			//Cell toCell = GetCellFromWorldPoint(to.position);
 			if (path != null)
 			{
 				foreach (Cell cell in path)

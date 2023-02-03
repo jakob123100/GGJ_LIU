@@ -2,8 +2,16 @@ using UnityEngine;
 
 public class CharacterControls : MonoBehaviour
 {
+    #region SingleTon
+    public CharacterControls Instance;
 
-    [SerializeField] private float velocity = 10.0f;
+	private void OnEnable()
+	{
+		Instance = this;
+	}
+	#endregion
+
+	[SerializeField] private float velocity = 10.0f;
     [SerializeField] private Camera cam;
     [SerializeField] private Rigidbody body;
     private void PleaseMove()

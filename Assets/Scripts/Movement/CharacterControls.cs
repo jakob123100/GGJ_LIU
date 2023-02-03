@@ -13,7 +13,6 @@ public class CharacterControls : MonoBehaviour
 
 	[SerializeField] private float velocity = 10.0f;
     [SerializeField] private Camera cam;
-    [SerializeField] private Rigidbody body;
 
     private void PleaseMove()
     {

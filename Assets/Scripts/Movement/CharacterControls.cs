@@ -27,27 +27,44 @@ public class CharacterControls : MonoBehaviour
 
     private void PleaseMove()
     {
+        RaycastHit hit;
+
         if (allowedToMove)
         {
             if (Input.GetKey(KeyCode.W))
             {
-                gameObject.transform.position +=
+                if (!Physics.Raycast(transform.position, Time.deltaTime * velocity * new Vector3(0, 0, 1), out hit, 1))
+                {
+
+                    gameObject.transform.position +=
                     Time.deltaTime * velocity * new Vector3(0, 0, 1);
+                }
             }
             if (Input.GetKey(KeyCode.S))
             {
-                gameObject.transform.position +=
+                if (!Physics.Raycast(transform.position, Time.deltaTime * -velocity * new Vector3(0, 0, 1), out hit, 1))
+                {
+
+                    gameObject.transform.position +=
                     Time.deltaTime * -velocity * new Vector3(0, 0, 1);
+                }
             }
             if (Input.GetKey(KeyCode.D))
             {
-                gameObject.transform.position +=
+                if (!Physics.Raycast(transform.position, Time.deltaTime * velocity * new Vector3(1, 0, 0), out hit, 1))
+                {
+
+                    gameObject.transform.position +=
                     Time.deltaTime * velocity * new Vector3(1, 0, 0);
+                }
             }
             if (Input.GetKey(KeyCode.A))
             {
-                gameObject.transform.position +=
+                if (!Physics.Raycast(transform.position, Time.deltaTime * -velocity * new Vector3(1, 0, 0), out hit, 1))
+                {
+                    gameObject.transform.position +=
                     Time.deltaTime * -velocity * new Vector3(1, 0, 0);
+                }
             }
         }
     }
@@ -120,11 +137,16 @@ public class CharacterControls : MonoBehaviour
 
     private void Dashing()
     {
-        if(allowedToMove == false)
-        {
-            gameObject.transform.position += Time.deltaTime * dashSpeed.Evaluate(Time.time - currentTime) * velocity * dashDirection * dashStrenght;
+        RaycastHit hit;
 
-            if(Time.time > currentTime + dashDuration)
+        if (allowedToMove == false)
+        {
+            if (!Physics.Raycast(transform.position, Time.deltaTime * dashSpeed.Evaluate(Time.time - currentTime) * velocity * dashDirection * dashStrenght, out hit, 1))
+            {
+                gameObject.transform.position += Time.deltaTime * dashSpeed.Evaluate(Time.time - currentTime) * velocity * dashDirection * dashStrenght;
+            }
+
+            if (Time.time > currentTime + dashDuration)
             {
                 allowedToMove = true;
             }

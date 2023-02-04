@@ -18,8 +18,6 @@ public class PathFindToPlayer : StateMachineBehaviour
     int pathIndex = -1;
     float closeEnough = 0.2f;
 
-    bool lost = false;
-
     CancellationTokenSource cancellationToken;
 
     private async void findPath(Animator animator)
@@ -31,15 +29,22 @@ public class PathFindToPlayer : StateMachineBehaviour
 
 		goalCell = Grid.Instance.GetCellFromWorldPoint(CharacterControls.Instance.transform.position);
 
-        if(goalCell == null)
+        Cell goalCellCoppy = goalCell;
+
+        if(goalCellCoppy == null || enemyCell == null)
         {
             return;
         }
 
-        path = await Task.Run(() =>
+		var result = await Task.Run(() =>
         {
-			return AStar<Cell>.PathFind(grid, weightMap, enemyCell.GridX, enemyCell.GridY, goalCell.GridX, goalCell.GridY, cancellationToken);
+			return AStar<Cell>.PathFind(grid, weightMap, enemyCell.GridX, enemyCell.GridY, goalCellCoppy.GridX, goalCellCoppy.GridY, cancellationToken);
 		}, cancellationToken.Token);
+
+        if(result != null)
+        {
+            path = result;
+        }
 
         if(path.Length <= 1)
         {
@@ -59,8 +64,6 @@ public class PathFindToPlayer : StateMachineBehaviour
         findPath(animator);
     }
 
-    Cell temp = null;
-
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -73,15 +76,11 @@ public class PathFindToPlayer : StateMachineBehaviour
         if(goalCell == null)
         {
             findPath(animator);
-            if(path.Length == 0)
-            {
-                lost = true;
-                return;
-            }
         }
 
         if(pathIndex == -1)
         {
+            goalCell = null;
             return;
         }
 
@@ -112,11 +111,6 @@ public class PathFindToPlayer : StateMachineBehaviour
             if(Vector3.Distance(CharacterControls.Instance.transform.position, goalCell.WorldPos) > acceptableGoalError)
             {
 				findPath(animator);
-				if (path.Length == 0)
-				{
-					lost = true;
-					return;
-				}
 			}
 
             pathIndex++;

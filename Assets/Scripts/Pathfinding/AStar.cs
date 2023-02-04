@@ -124,7 +124,7 @@ public class AStar <T>
 
 	public static T[] PathFind(T[,] objectMap, float[,] weightMap, int startX, int startY, int goalX, int goalY, CancellationTokenSource cancellationToken)
 	{
-		if (!IsInBounds(goalX, goalY, weightMap) || !IsInBounds(goalX, goalY, weightMap))
+		if (!IsInBounds(goalX, goalY, weightMap) || !IsInBounds(goalX, goalY, weightMap) || (startX == goalX && startY == goalY))
 		{
 			return new T[0];
 		}

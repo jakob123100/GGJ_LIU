@@ -76,7 +76,7 @@ public class AStar <T>
 		{
 			for (int x = -1; x <= 1; x++)
 			{
-				if (x == 0 && y == 0)
+				if (x == 0 && y == 0 || (x != 0 && y != 0))
 				{
 					continue;
 				}
@@ -117,14 +117,14 @@ public class AStar <T>
 			path.Add(objectMap[current.XIndex, current.YIndex]);
 			current = current.Parent;
 		}
-
-		path.Reverse();
+		//path.RemoveAt(path.Count - 1);
+		//path.Reverse();
 		return path.ToArray();
 	}
 
 	public static T[] PathFind(T[,] objectMap, float[,] weightMap, int startX, int startY, int goalX, int goalY, CancellationTokenSource cancellationToken)
 	{
-		if (!IsInBounds(startX, startY, weightMap) || !IsInBounds(goalX, goalY, weightMap))
+		if (!IsInBounds(goalX, goalY, weightMap) || !IsInBounds(goalX, goalY, weightMap))
 		{
 			return new T[0];
 		}
@@ -132,7 +132,7 @@ public class AStar <T>
 		PriorityQueue<AStarNode> open = new PriorityQueue<AStarNode>();
 		List<AStarNode> closed = new List<AStarNode>();
 
-		AStarNode startNode = new AStarNode(0, 0, startX, startY);
+		AStarNode startNode = new AStarNode(0, 0, goalX, goalY);
 		closed.Add(startNode);
 		open.Insert(0, startNode);
 
@@ -145,14 +145,14 @@ public class AStar <T>
 
 			AStarNode current = open.RemoveMax();
 
-			if (current.XIndex == goalX && current.YIndex == goalY)
-			{
-				return BacktracePath(current, objectMap);
-			}
-
 			foreach (AStarNode neighbour in GetNeighbours(current, weightMap))
 			{
-				neighbour.HCost = Vector2.Distance(new Vector2(neighbour.XIndex, neighbour.YIndex), new Vector2(goalX, goalY));
+				if (neighbour.XIndex == startX && neighbour.YIndex == startY)
+				{
+					return BacktracePath(current, objectMap);
+				}
+
+				neighbour.HCost = Vector2.Distance(new Vector2(neighbour.XIndex, neighbour.YIndex), new Vector2(startX, startY));
 				neighbour.FCost = neighbour.GCost + neighbour.HCost;
 
 				int dupeIndex = -1;

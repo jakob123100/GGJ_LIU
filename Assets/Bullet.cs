@@ -9,13 +9,14 @@ public class Bullet : MonoBehaviour
     public int damage;
     GameObject parent;
 
-    public static void CreateComponent(GameObject gameObject, float speed, Vector3 direction, int damage, GameObject parent = null, float destroyDelay = 3f)
+    public static void CreateComponent(GameObject gameObject, float speed, Vector3 direction, int damage, float scale, GameObject parent = null, float destroyDelay = 3f)
     {
         Bullet component = gameObject.AddComponent<Bullet>();
         component.speed = speed;
         component.direction = direction;
         component.damage = damage;
         component.parent = parent;
+        gameObject.transform.localScale = scale * Vector3.one;
         Destroy(gameObject, destroyDelay);
     }
 

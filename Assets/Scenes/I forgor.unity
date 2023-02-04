@@ -284,7 +284,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   gridWorldSize: {x: 100, y: 100}
-  cellRadius: 1
+  cellRadius: 0.5
   pathFindOnce: 0
   pathFind: 0
   showVisited: 0
@@ -1415,7 +1415,7 @@ PrefabInstance:
     - target: {fileID: 7999044718795549919, guid: 6aa60045c77fa364dbb3266bc0151510,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.93
+      value: -19.25
       objectReference: {fileID: 0}
     - target: {fileID: 7999044718795549919, guid: 6aa60045c77fa364dbb3266bc0151510,
         type: 3}
@@ -1425,7 +1425,7 @@ PrefabInstance:
     - target: {fileID: 7999044718795549919, guid: 6aa60045c77fa364dbb3266bc0151510,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.54
+      value: 19.5
       objectReference: {fileID: 0}
     - target: {fileID: 7999044718795549919, guid: 6aa60045c77fa364dbb3266bc0151510,
         type: 3}

@@ -6,6 +6,11 @@ public class SpriteScript : MonoBehaviour
 {
     void Update()
     {
-       // transform.LookAt(CharacterControls.Instance.transform, Vector3.down);
-    }
+		Camera mainCamera = Camera.main;
+		Vector3 cameraDirection = Vector3.Normalize(mainCamera.transform.position - transform.position);
+		Quaternion cameraRotation = Quaternion.LookRotation(cameraDirection);
+		cameraRotation.x = 0;
+		cameraRotation.y = 0;
+		transform.rotation = cameraRotation;
+	}
 }

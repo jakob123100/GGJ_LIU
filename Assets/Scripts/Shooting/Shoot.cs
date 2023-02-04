@@ -6,7 +6,14 @@ public class Shoot : MonoBehaviour
 {
     [SerializeField] private GameObject objectToShoot;
     [SerializeField] private float shootingForce = 50f;
-    [SerializeField] public float fireRate = 0.5f;
+    [SerializeField] private float fireRate = 0.5f;
+    [SerializeField] private float bulletSpread = 0f;
+    [SerializeField] private int damage;
+    [SerializeField] private float scale = 1f;
+
+    private float currentBulletSpread;
+    [SerializeField] private float bulletSpreadTime = 0f;
+
     private float timeUntilNextBullet;
 
     private void DoTheShoot()
@@ -15,13 +22,18 @@ public class Shoot : MonoBehaviour
         {
             timeUntilNextBullet = Time.time + fireRate;
 
+            if(currentBulletSpread < bulletSpread)
+            currentBulletSpread += bulletSpreadTime * Time.deltaTime;
+
+            float direction = Random.Range(-currentBulletSpread, currentBulletSpread);
+            Vector3 directionVector = transform.forward + transform.right * direction;
+
             GameObject bullet = Instantiate(
                 objectToShoot,
-                transform.position + transform.forward,
-                transform.rotation);
+                transform.position,
+                Quaternion.LookRotation(directionVector));
 
-            bullet.GetComponent<Rigidbody>()
-                .AddForce(transform.forward * shootingForce, ForceMode.Impulse);
+            Bullet.CreateComponent(bullet, shootingForce, directionVector, damage, scale);
         }
     }
 
@@ -31,6 +43,14 @@ public class Shoot : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             DoTheShoot();
+        }
+        else if (currentBulletSpread > 0)
+        {
+            currentBulletSpread -= bulletSpreadTime * 2 * Time.deltaTime;
+        }
+        else
+        {
+            currentBulletSpread = 0;
         }
     }
 }

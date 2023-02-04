@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
     {
         Bullet component = gameObject.AddComponent<Bullet>();
         component.speed = speed;
-        component.direction = direction;
+        component.direction = direction.normalized;
         component.damage = damage;
         component.parent = parent;
         component.startTime = Time.time;

@@ -28,6 +28,7 @@ public class PathFindToPlayer : StateMachineBehaviour
 		float[,] weightMap = Grid.Instance.GetWeightMap();
 
 		Cell enemyCell = Grid.Instance.GetCellFromWorldPoint(animator.transform.position);
+
 		goalCell = Grid.Instance.GetCellFromWorldPoint(CharacterControls.Instance.transform.position);
 
         if(goalCell == null)
@@ -68,51 +69,8 @@ public class PathFindToPlayer : StateMachineBehaviour
             return;
         }
 
-        /*if (lost)
-		{
-			float[,] wightmap = Grid.Instance.GetWeightMap();
-
-			if (temp != null)
-			{
-                animator.transform.position = Vector3.MoveTowards(animator.transform.position, temp.WorldPos, speed * Time.deltaTime);
-
-                if(Vector3.Distance(animator.transform.position, temp.WorldPos) < closeEnough)
-                {
-                    lost = false;
-                    temp = null;
-                    return;
-                }
-			}
-
-			Cell enemyCell = Grid.Instance.GetCellFromWorldPoint(animator.transform.position);
-
-
-			if (wightmap[enemyCell.GridX, enemyCell.GridY] != -1)
-            {
-                goalCell = temp;
-				lost = false;
-                return;
-            }
-
-            Cell[] neighbours = Grid.Instance.GetNeighbours(enemyCell);
-
-            float bestDist = float.MaxValue;
-            foreach (Cell neighbour in neighbours)
-            {
-                if (wightmap[neighbour.GridX, neighbour.GridY] == -1) continue;
-
-                if(Vector3.Distance(neighbour.WorldPos, enemyCell.WorldPos) < bestDist)
-                {
-                    temp = neighbour;
-                    bestDist = Vector3.Distance(neighbour.WorldPos, enemyCell.WorldPos);
-
-				}
-            }
-            return;
-        }*/
-
         // is path valid? else get new path
-        if(goalCell == null || Vector3.Distance(CharacterControls.Instance.transform.position, goalCell.WorldPos) > acceptableGoalError)
+        if(goalCell == null)
         {
             findPath(animator);
             if(path.Length == 0)
@@ -151,6 +109,16 @@ public class PathFindToPlayer : StateMachineBehaviour
 		animator.transform.position = Vector3.MoveTowards(animator.transform.position, path[pathIndex].WorldPos, speed * Time.deltaTime);
         if(Vector3.Distance(animator.transform.position, path[pathIndex].WorldPos) < closeEnough)
         {
+            if(Vector3.Distance(CharacterControls.Instance.transform.position, goalCell.WorldPos) > acceptableGoalError)
+            {
+				findPath(animator);
+				if (path.Length == 0)
+				{
+					lost = true;
+					return;
+				}
+			}
+
             pathIndex++;
         }
     }

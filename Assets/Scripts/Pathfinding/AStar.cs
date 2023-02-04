@@ -76,7 +76,7 @@ public class AStar <T>
 		{
 			for (int x = -1; x <= 1; x++)
 			{
-				if (x == 0 && y == 0 || (x != 0 && y != 0))
+				if (x == 0 && y == 0 /*|| (x != 0 && y != 0)*/)
 				{
 					continue;
 				}

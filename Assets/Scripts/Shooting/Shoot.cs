@@ -27,30 +27,25 @@ public class Shoot : MonoBehaviour
     {
         if (movementScript.allowedToMove == true)
         {
-            if (Time.time > timeUntilNextBullet)
+            if (currentBulletSpread < bulletSpread)
             {
-                timeUntilNextBullet = Time.time + fireRate;
-
-                if (currentBulletSpread < bulletSpread)
-                {
-                    currentBulletSpread += bulletSpreadTime * Time.deltaTime;
-                }
-                    
-                float direction = Random.Range(-currentBulletSpread, currentBulletSpread);
-                Vector3 directionVector = transform.forward + transform.right * direction;
-
-                flash.SetActive(true);
-
-                GameObject bullet = Instantiate(
-                    objectToShoot,
-                    transform.position,
-                    Quaternion.LookRotation(directionVector));
-
-                Bullet.CreateComponent(bullet, shootingForce, directionVector, damage, scale, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
-
-                movementScript.gameObject.transform.position += 
-                    new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z);
+                currentBulletSpread += bulletSpreadTime * Time.deltaTime;
             }
+
+            float direction = Random.Range(-currentBulletSpread, currentBulletSpread);
+            Vector3 directionVector = transform.forward + transform.right * direction;
+
+            flash.SetActive(true);
+
+            GameObject bullet = Instantiate(
+                objectToShoot,
+                transform.position,
+                Quaternion.LookRotation(directionVector));
+
+            Bullet.CreateComponent(bullet, shootingForce, directionVector, damage, scale, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
+
+            movementScript.gameObject.transform.position +=
+                new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z);
         }
     }
 
@@ -58,7 +53,11 @@ public class Shoot : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            DoTheShoot();
+            if (Time.time > timeUntilNextBullet)
+            {
+                timeUntilNextBullet = Time.time + fireRate;
+                DoTheShoot();
+            } 
         }
         else if (currentBulletSpread > 0)
         {

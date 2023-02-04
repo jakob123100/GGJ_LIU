@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class ShootAOEProjectiles : MonoBehaviour
 {
-    [SerializeField] int amountOfBullts = 5;
-    [SerializeField] int bulletDamage = 3;
-    [SerializeField] float bulletSpeed = 5f;
-    [SerializeField] float fireRate = 1f;
-    [SerializeField] float scale = 1f;
-    [SerializeField] GameObject bulletPrefab;
-    [SerializeField] float bulletDestroyDelay = 3f;
-    [SerializeField] Vector3 bulletSpawnOffset = Vector3.zero;
-    [SerializeField] AnimationCurve speedOverLifetime;
+    [SerializeField] private int amountOfBullts = 5;
+    [SerializeField] private int bulletDamage = 3;
+    [SerializeField] private float bulletSpeed = 5f;
+    [SerializeField] private float fireRate = 1f;
+    [SerializeField] private float scale = 1f;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private float bulletDestroyDelay = 3f;
+    [SerializeField] private Vector3 bulletSpawnOffset = Vector3.zero;
+    [SerializeField] private AnimationCurve speedOverLifetime;
 
     [SerializeField] private float bulletSpread = 10f;
 
-    float lastFireTime = 0;
+    private float timeUntilNextBullet = 0;
 
     private void FireBullets()
     {
@@ -30,7 +30,7 @@ public class ShootAOEProjectiles : MonoBehaviour
             float spreadDirection = Random.Range(-bulletSpread, bulletSpread);
 
             float angle = i * angleStepSize;
-            Vector3 direction = new Vector3(
+            Vector3 direction = new(
                 Mathf.Sin(Mathf.Deg2Rad * angle + spreadDirection) , 
                 0, 
                 Mathf.Cos(Mathf.Deg2Rad * angle + spreadDirection));
@@ -52,18 +52,11 @@ public class ShootAOEProjectiles : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if(Time.time - lastFireTime > fireRate)
+        if(Time.time > timeUntilNextBullet)
         {
-            lastFireTime= Time.time;
+            timeUntilNextBullet  = Time.time + fireRate;
             FireBullets();
         }
     }

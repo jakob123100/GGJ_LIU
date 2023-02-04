@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,6 +20,8 @@ public class PathFindToPlayer : StateMachineBehaviour
 
     bool lost = false;
 
+    CancellationTokenSource cancellationToken;
+
     private async void findPath(Animator animator)
     {
 		grid = Grid.Instance.GetCellGrid();
@@ -34,9 +37,9 @@ public class PathFindToPlayer : StateMachineBehaviour
 
         var result = await Task.Run(() =>
         {
-			path = AStar<Cell>.PathFind(grid, weightMap, enemyCell.GridX, enemyCell.GridY, goalCell.GridX, goalCell.GridY);
+			path = AStar<Cell>.PathFind(grid, weightMap, enemyCell.GridX, enemyCell.GridY, goalCell.GridX, goalCell.GridY, cancellationToken);
             return path;
-		});
+		}, cancellationToken.Token);
 
         if(path.Length <= 1)
         {
@@ -50,6 +53,8 @@ public class PathFindToPlayer : StateMachineBehaviour
 	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        cancellationToken = new CancellationTokenSource();
+
         // Find Path
         findPath(animator);
     }
@@ -155,6 +160,7 @@ public class PathFindToPlayer : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //Kill old pathfinding task
+        cancellationToken.Cancel();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

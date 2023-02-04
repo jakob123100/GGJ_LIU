@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class AStarNode
@@ -121,7 +122,7 @@ public class AStar <T>
 		return path.ToArray();
 	}
 
-	public static T[] PathFind(T[,] objectMap, float[,] weightMap, int startX, int startY, int goalX, int goalY)
+	public static T[] PathFind(T[,] objectMap, float[,] weightMap, int startX, int startY, int goalX, int goalY, CancellationTokenSource cancellationToken)
 	{
 		if (!IsInBounds(startX, startY, weightMap) || !IsInBounds(goalX, goalY, weightMap)
 			|| weightMap[startX, startY] == -1 || weightMap[goalX, goalY] == -1)
@@ -138,6 +139,11 @@ public class AStar <T>
 
 		while (!open.IsEmpty)
 		{
+			if (cancellationToken.IsCancellationRequested)
+			{
+				return new T[0];
+			}
+
 			AStarNode current = open.RemoveMax();
 
 			if (current.XIndex == goalX && current.YIndex == goalY)

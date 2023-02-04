@@ -183,7 +183,7 @@ public class Grid : MonoBehaviour
 			Cell fromCell = GetCellFromWorldPoint(from.position);
 			Cell toCell = GetCellFromWorldPoint(to.position);
 
-			path = AStar<Cell>.PathFind(grid, weightMap, fromCell.GridX, fromCell.GridY, toCell.GridX, toCell.GridY);
+			//path = AStar<Cell>.PathFind(grid, weightMap, fromCell.GridX, fromCell.GridY, toCell.GridX, toCell.GridY);
 			//UnityEngine.Debug.Log(path.Length);
 		}
 	}

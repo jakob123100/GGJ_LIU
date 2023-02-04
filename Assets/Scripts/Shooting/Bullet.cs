@@ -5,8 +5,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float speed;
-    Vector3 direction;
     public int damage;
+    Vector3 direction;
     GameObject parent;
     AnimationCurve speedOverLifetime;
     float startTime = 0f;
@@ -27,10 +27,10 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, destroyDelay);
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
-        float stepSize = speed * Time.deltaTime;
-        lifetime += Time.deltaTime;
+        float stepSize = speed * Time.fixedDeltaTime;
+        lifetime += Time.fixedDeltaTime;
 
         if(speedOverLifetime != null)
         {

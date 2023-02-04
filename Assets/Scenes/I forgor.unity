@@ -940,8 +940,7 @@ MonoBehaviour:
     type: 3}
   enemyThree: {fileID: 1125963783256559174, guid: de355ee235ea53e42ae3616f303dfe91,
     type: 3}
-  spawnRate: 5
-  spawnRadius: 10
+  spawnRate: 10
 --- !u!1001 &1608729635
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1657,6 +1656,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: bulletSpread
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
         type: 3}
       propertyPath: speedOverLifetime.m_Curve.Array.size

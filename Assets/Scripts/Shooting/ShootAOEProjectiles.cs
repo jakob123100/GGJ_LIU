@@ -14,6 +14,8 @@ public class ShootAOEProjectiles : MonoBehaviour
     [SerializeField] Vector3 bulletSpawnOffset = Vector3.zero;
     [SerializeField] AnimationCurve speedOverLifetime;
 
+    [SerializeField] private float bulletSpread;
+
     float lastFireTime = 0;
 
     private void FireBullets()
@@ -21,11 +23,17 @@ public class ShootAOEProjectiles : MonoBehaviour
         if(amountOfBullts <= 0) { return; }
 
         float angleStepSize = 360 / (amountOfBullts);
+        
 
         for (int i = 0; i < amountOfBullts; i++)
         {
+            float spreadDirection = Random.Range(-bulletSpread, bulletSpread);
+
             float angle = i * angleStepSize;
-            Vector3 direction = new Vector3(Mathf.Sin(Mathf.Deg2Rad * angle), 0, Mathf.Cos(Mathf.Deg2Rad * angle));
+            Vector3 direction = new Vector3(
+                Mathf.Sin(Mathf.Deg2Rad * angle + spreadDirection) , 
+                0, 
+                Mathf.Cos(Mathf.Deg2Rad * angle + spreadDirection));
 
             GameObject bullet = Instantiate(bulletPrefab, transform.position + bulletSpawnOffset, Quaternion.LookRotation(direction));
             Bullet.CreateComponent(bullet, bulletSpeed, direction, bulletDamage, scale, gameObject, bulletDestroyDelay, speedOverLifetime);

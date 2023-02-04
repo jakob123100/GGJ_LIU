@@ -32,8 +32,10 @@ public class Shoot : MonoBehaviour
                 timeUntilNextBullet = Time.time + fireRate;
 
                 if (currentBulletSpread < bulletSpread)
+                {
                     currentBulletSpread += bulletSpreadTime * Time.deltaTime;
-
+                }
+                    
                 float direction = Random.Range(-currentBulletSpread, currentBulletSpread);
                 Vector3 directionVector = transform.forward + transform.right * direction;
 
@@ -52,7 +54,6 @@ public class Shoot : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     private void Update()
     {
         if (Input.GetMouseButton(0))

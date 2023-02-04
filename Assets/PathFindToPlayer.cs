@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PathFindToPlayer : StateMachineBehaviour
@@ -16,6 +17,8 @@ public class PathFindToPlayer : StateMachineBehaviour
     int pathIndex = -1;
     float closeEnough = 0.2f;
 
+    bool lost = false;
+
     private async void findPath(Animator animator)
     {
 		grid = Grid.Instance.GetCellGrid();
@@ -23,6 +26,11 @@ public class PathFindToPlayer : StateMachineBehaviour
 
 		Cell enemyCell = Grid.Instance.GetCellFromWorldPoint(animator.transform.position);
 		goalCell = Grid.Instance.GetCellFromWorldPoint(CharacterControls.Instance.transform.position);
+
+        if(goalCell == null)
+        {
+            return;
+        }
 
         var result = await Task.Run(() =>
         {
@@ -46,13 +54,68 @@ public class PathFindToPlayer : StateMachineBehaviour
         findPath(animator);
     }
 
+    Cell temp = null;
+
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if(CharacterControls.Instance == null)
+        {
+            return;
+        }
+
+        if (lost)
+		{
+
+			if (temp != null)
+			{
+                animator.transform.position = Vector3.MoveTowards(animator.transform.position, temp.WorldPos, speed * Time.deltaTime);
+
+                if(Vector3.Distance(animator.transform.position, temp.WorldPos) < closeEnough)
+                {
+                    lost = false;
+                    temp = null;
+                    return;
+                }
+			}
+
+			Cell enemyCell = Grid.Instance.GetCellFromWorldPoint(animator.transform.position);
+
+            float[,] wightmap = Grid.Instance.GetWeightMap();
+
+
+			if (wightmap[enemyCell.GridX, enemyCell.GridY] != -1)
+            {
+                lost = false;
+                return;
+            }
+
+            Cell[] neighbours = Grid.Instance.GetNeighbours(enemyCell);
+
+            float bestDist = float.MaxValue;
+            foreach (Cell neighbour in neighbours)
+            {
+                if (wightmap[neighbour.GridX, neighbour.GridY] == -1) continue;
+
+                if(Vector3.Distance(neighbour.WorldPos, enemyCell.WorldPos) < bestDist)
+                {
+                    temp = neighbour;
+                    bestDist = Vector3.Distance(neighbour.WorldPos, enemyCell.WorldPos);
+
+				}
+            }
+
+        }
+
         // is path valid? else get new path
         if(goalCell == null || Vector3.Distance(CharacterControls.Instance.transform.position, goalCell.WorldPos) > acceptableGoalError)
         {
             findPath(animator);
+            if(path.Length == 0)
+            {
+                lost = true;
+                return;
+            }
         }
 
         if(pathIndex == -1)

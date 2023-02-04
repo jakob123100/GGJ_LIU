@@ -99,6 +99,33 @@ public class Grid : MonoBehaviour
 		return grid[x, y];
 	}
 
+	public bool IsInBounds(int x, int y)
+	{
+		return x >= 0 && y >= 0 && x < grid.GetLength(0) && y < grid.GetLength(1);
+	}
+
+	public Cell[] GetNeighbours(Cell cell)
+	{
+		List<Cell> neighbours = new List<Cell>();
+		for (int y = -1; y <= 1; y++)
+		{
+			for (int x = 0; x <= 1; x++)
+			{
+				if(y == 0 && x == 0) continue;
+
+				int newX = cell.GridX + x;
+				int newY = cell.GridY + y;
+
+				if (IsInBounds(newX, newY))
+				{
+					neighbours.Add(grid[newX, newY]);
+				}
+			}
+		}
+
+		return neighbours.ToArray();
+	}
+
 	private void Start()
 	{
 		CreateGrid();

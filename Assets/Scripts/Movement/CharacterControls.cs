@@ -11,34 +11,45 @@ public class CharacterControls : MonoBehaviour
 	{
 		Instance = this;
 	}
-	#endregion
+    #endregion
 
-	[SerializeField] private float velocity = 10.0f;
+    public float velocity;
+
     [SerializeField] private Camera cam;
+
+    private bool allowedToMove = true;
+    [SerializeField] private AnimationCurve dashSpeed;
+    private float currentTime;
+    private Vector3 dashDirection;
+    [SerializeField] private float dashDuration;
+    [SerializeField] private float dashStrenght;
+    [SerializeField] private ParticleSystem dashParticleEffect;
 
     private void PleaseMove()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (allowedToMove)
         {
-            gameObject.transform.position +=
-                Time.deltaTime * velocity * new Vector3(0, 0, 1);
+            if (Input.GetKey(KeyCode.W))
+            {
+                gameObject.transform.position +=
+                    Time.deltaTime * velocity * new Vector3(0, 0, 1);
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                gameObject.transform.position +=
+                    Time.deltaTime * -velocity * new Vector3(0, 0, 1);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                gameObject.transform.position +=
+                    Time.deltaTime * velocity * new Vector3(1, 0, 0);
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                gameObject.transform.position +=
+                    Time.deltaTime * -velocity * new Vector3(1, 0, 0);
+            }
         }
-        if (Input.GetKey(KeyCode.S))
-        {
-            gameObject.transform.position +=
-                Time.deltaTime * -velocity * new Vector3(0, 0, 1);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            gameObject.transform.position +=
-                Time.deltaTime * velocity * new Vector3(1, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            gameObject.transform.position +=
-                Time.deltaTime * -velocity * new Vector3(1, 0, 0);
-        }
-
     }
 
     private void LookAtMouseCyka()
@@ -54,16 +65,70 @@ public class CharacterControls : MonoBehaviour
         }
     }
 
-
     // Update is called once per frame
     private void Update()
     {
         PleaseMove();
+        Dash();
+        Dashing();
     }
 
     private void FixedUpdate()
     {
         LookAtMouseCyka();
+    }
+
+    private void Dash()
+    {
+        if (allowedToMove == true)
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                allowedToMove = false;
+                currentTime = Time.time;
+                dashParticleEffect.Play();
+
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
+                {
+                    dashDirection = new Vector3(0, 0, 0);
+                }
+
+                if (Input.GetKey(KeyCode.W))
+                {
+                    dashDirection.z = 1f;
+                }
+                if (Input.GetKey(KeyCode.S))
+                {
+                    dashDirection.z = -1f;
+                }
+                if (Input.GetKey(KeyCode.D))
+                {
+                    dashDirection.x = 1f;
+                }
+                if (Input.GetKey(KeyCode.A))
+                {
+                    dashDirection.x = -1f;
+                }
+
+                if (dashDirection.x != 0 && dashDirection.z != 0)
+                {
+                    dashDirection *= 0.75f;
+                }
+            }
+        }
+    }
+
+    private void Dashing()
+    {
+        if(allowedToMove == false)
+        {
+            gameObject.transform.position += Time.deltaTime * dashSpeed.Evaluate(Time.time - currentTime) * velocity * dashDirection * dashStrenght;
+
+            if(Time.time > currentTime + dashDuration)
+            {
+                allowedToMove = true;
+            }
+        }
     }
 
 }

@@ -14,7 +14,7 @@ public class ShootAOEProjectiles : MonoBehaviour
     [SerializeField] Vector3 bulletSpawnOffset = Vector3.zero;
     [SerializeField] AnimationCurve speedOverLifetime;
 
-    [SerializeField] private float bulletSpread;
+    [SerializeField] private float bulletSpread = 10f;
 
     float lastFireTime = 0;
 
@@ -35,8 +35,20 @@ public class ShootAOEProjectiles : MonoBehaviour
                 0, 
                 Mathf.Cos(Mathf.Deg2Rad * angle + spreadDirection));
 
-            GameObject bullet = Instantiate(bulletPrefab, transform.position + bulletSpawnOffset, Quaternion.LookRotation(direction));
-            Bullet.CreateComponent(bullet, bulletSpeed, direction, bulletDamage, scale, gameObject, bulletDestroyDelay, speedOverLifetime);
+            GameObject bullet = Instantiate(
+                bulletPrefab, 
+                transform.position + bulletSpawnOffset,
+                Quaternion.LookRotation(direction));
+
+            Bullet.CreateComponent(
+                bullet, 
+                bulletSpeed, 
+                direction, 
+                bulletDamage, 
+                scale, 
+                gameObject, 
+                bulletDestroyDelay,
+                speedOverLifetime);
         }
     }
 

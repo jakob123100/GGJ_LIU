@@ -82,18 +82,6 @@ public class CharacterControls : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-        PleaseMove();
-        Dash();
-        Dashing();
-    }
-
-    private void FixedUpdate()
-    {
-        LookAtMouseCyka();
-    }
 
     private void Dash()
     {
@@ -153,4 +141,15 @@ public class CharacterControls : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        PleaseMove();
+        Dash();
+        Dashing();
+    }
+
+    private void FixedUpdate()
+    {
+        LookAtMouseCyka();
+    }
 }

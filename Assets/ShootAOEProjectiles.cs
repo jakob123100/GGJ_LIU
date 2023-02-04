@@ -8,9 +8,11 @@ public class ShootAOEProjectiles : MonoBehaviour
     [SerializeField] int bulletDamage = 3;
     [SerializeField] float bulletSpeed = 5f;
     [SerializeField] float fireRate = 1f;
+    [SerializeField] float scale = 1f;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] float bulletDestroyDelay = 3f;
     [SerializeField] Vector3 bulletSpawnOffset = Vector3.zero;
+    [SerializeField] AnimationCurve speedOverLifetime;
 
     float lastFireTime = 0;
 
@@ -26,7 +28,7 @@ public class ShootAOEProjectiles : MonoBehaviour
             Vector3 direction = new Vector3(Mathf.Sin(Mathf.Deg2Rad * angle), 0, Mathf.Cos(Mathf.Deg2Rad * angle));
 
             GameObject bullet = Instantiate(bulletPrefab, transform.position + bulletSpawnOffset, Quaternion.LookRotation(direction));
-            Bullet.CreateComponent(bullet, bulletSpeed, direction, bulletDamage, gameObject, bulletDestroyDelay);
+            Bullet.CreateComponent(bullet, bulletSpeed, direction, bulletDamage, scale, gameObject, bulletDestroyDelay, speedOverLifetime);
         }
     }
 

@@ -6,7 +6,7 @@ public class Shoot : MonoBehaviour
 {
     [SerializeField] private GameObject objectToShoot;
     [SerializeField] private float shootingForce = 50f;
-    [SerializeField] private float fireRate = 0.5f;
+    [SerializeField] public float fireRate = 0.5f;
     private float timeUntilNextBullet;
 
     private void DoTheShoot()

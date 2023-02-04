@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletLogic : MonoBehaviour
 {
-    [SerializeField] private float despawnDistance = 200f;
+    [SerializeField] public float despawnDistance = 200f;
 
     private void Start()
     {

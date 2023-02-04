@@ -26,8 +26,6 @@ public class CameraFollower : MonoBehaviour
                 desiredPosition,
                 smoothSpeed);
 
-        transform.SetPositionAndRotation(
-            smoothedPosition,
-            Quaternion.Euler(75f, 0f, 0f));
+        transform.position = smoothedPosition;
     }
 }

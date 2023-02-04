@@ -6,6 +6,6 @@ public class SpriteScript : MonoBehaviour
 {
     void Update()
     {
-        transform.LookAt(Camera.main.transform);
+       // transform.LookAt(CharacterControls.Instance.transform, Vector3.down);
     }
 }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7999044718795549913}
   - component: {fileID: 7999044718795549918}
   - component: {fileID: 7999044718795549912}
+  - component: {fileID: -8479036219880781912}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -158,8 +159,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amountOfBullts: 12
   bulletDamage: 3
-  bulletSpeed: 15
-  fireRate: 1
+  bulletSpeed: 8
+  fireRate: 2
   scale: 5
   bulletPrefab: {fileID: 6903537214554798692, guid: 5391e55b9595ac44c8295408971dff55,
     type: 3}
@@ -198,3 +199,18 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  bulletSpread: 10
+--- !u!114 &-8479036219880781912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7999044718795549923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa33b28a1b4bcf489ce7c36522fcbf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 300
+  health: 0

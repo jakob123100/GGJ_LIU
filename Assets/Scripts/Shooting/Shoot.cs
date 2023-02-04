@@ -11,6 +11,8 @@ public class Shoot : MonoBehaviour
     [SerializeField] private int damage;
     [SerializeField] private float scale = 1f;
     [SerializeField] private CharacterControls movementScript;
+    [SerializeField] private AudioSource pangSource;
+    [SerializeField] private AudioClip pang;
 
     [SerializeField] private float knockback = 10f;
 
@@ -25,6 +27,8 @@ public class Shoot : MonoBehaviour
 
     private void DoTheShoot()
     {
+        RaycastHit hit;
+
         if (movementScript.allowedToMove == true)
         {
             if (currentBulletSpread < bulletSpread)
@@ -44,8 +48,19 @@ public class Shoot : MonoBehaviour
 
             Bullet.CreateComponent(bullet, shootingForce, directionVector, damage, scale, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
 
-            movementScript.gameObject.transform.position +=
+            float currentTime = 0;
+            if(currentTime < Time.time)
+            {
+                pangSource.pitch = Random.Range(0.9f, 1.1f);
+                pangSource.PlayOneShot(pang, Random.Range(1.9f, 2.1f));
+                currentTime = Time.time + 0.2f;
+            }
+
+            if (!Physics.Raycast(movementScript.gameObject.transform.position, new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z), out hit, 1))
+            {
+                movementScript.gameObject.transform.position +=
                 new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z);
+            }
         }
     }
 

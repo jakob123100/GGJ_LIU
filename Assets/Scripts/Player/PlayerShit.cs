@@ -7,6 +7,9 @@ public enum ModifyerType
 {
     damage,
     movementSpeed,
+    maxHealth,
+    healthRegen,
+    charScale
 }
 
 public class PlayerShit : MonoBehaviour
@@ -63,7 +66,8 @@ public class PlayerShit : MonoBehaviour
 
     private void OnModifierChange(ModifyerType modifyerType, double value)
     {
-		(ModifyerType, double) tupple = (modifyerType, value);
+		(ModifyerType, double) change = (modifyerType, value);
+        ModifierChange?.Invoke(this, change);
 	}
 
     void Start()

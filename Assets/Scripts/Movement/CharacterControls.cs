@@ -17,7 +17,7 @@ public class CharacterControls : MonoBehaviour
 
     [SerializeField] private Camera cam;
 
-    private bool allowedToMove = true;
+    public bool allowedToMove = true;
     [SerializeField] private AnimationCurve dashSpeed;
     private float currentTime;
     private Vector3 dashDirection;

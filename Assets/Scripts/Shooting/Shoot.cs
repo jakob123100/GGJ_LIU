@@ -10,30 +10,40 @@ public class Shoot : MonoBehaviour
     [SerializeField] private float bulletSpread = 0f;
     [SerializeField] private int damage;
     [SerializeField] private float scale = 1f;
+    [SerializeField] private CharacterControls movementScript;
+
+    [SerializeField] private AnimationCurve bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings;
 
     private float currentBulletSpread;
     [SerializeField] private float bulletSpreadTime = 0f;
 
     private float timeUntilNextBullet;
 
+    [SerializeField] private GameObject flash;
+
     private void DoTheShoot()
     {
-        if (Time.time > timeUntilNextBullet)
+        if (movementScript.allowedToMove == true)
         {
-            timeUntilNextBullet = Time.time + fireRate;
+            if (Time.time > timeUntilNextBullet)
+            {
+                timeUntilNextBullet = Time.time + fireRate;
 
-            if(currentBulletSpread < bulletSpread)
-            currentBulletSpread += bulletSpreadTime * Time.deltaTime;
+                if (currentBulletSpread < bulletSpread)
+                    currentBulletSpread += bulletSpreadTime * Time.deltaTime;
 
-            float direction = Random.Range(-currentBulletSpread, currentBulletSpread);
-            Vector3 directionVector = transform.forward + transform.right * direction;
+                float direction = Random.Range(-currentBulletSpread, currentBulletSpread);
+                Vector3 directionVector = transform.forward + transform.right * direction;
 
-            GameObject bullet = Instantiate(
-                objectToShoot,
-                transform.position,
-                Quaternion.LookRotation(directionVector));
+                flash.SetActive(true);
 
-            Bullet.CreateComponent(bullet, shootingForce, directionVector, damage, scale);
+                GameObject bullet = Instantiate(
+                    objectToShoot,
+                    transform.position,
+                    Quaternion.LookRotation(directionVector));
+
+                Bullet.CreateComponent(bullet, shootingForce, directionVector, damage, scale, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
+            }
         }
     }
 

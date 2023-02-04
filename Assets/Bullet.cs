@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    float speed;
+    public float speed;
     Vector3 direction;
-    int damage;
+    public int damage;
     GameObject parent;
 
     public static void CreateComponent(GameObject gameObject, float speed, Vector3 direction, int damage, GameObject parent = null, float destroyDelay = 3f)

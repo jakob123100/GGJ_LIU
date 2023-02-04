@@ -12,7 +12,6 @@ public class SpawningManager : MonoBehaviour
     [SerializeField] private GameObject enemyThree;
     [SerializeField] private float spawnRate = 5f;
 
-    [SerializeField] private float spawnRadius = 10f;   // Set the spawn radius here
     private readonly float buffer = 10f;
     private float timeToNextSpawn;
 

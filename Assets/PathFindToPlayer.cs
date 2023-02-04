@@ -71,6 +71,7 @@ public class PathFindToPlayer : StateMachineBehaviour
 
         if (lost)
 		{
+			float[,] wightmap = Grid.Instance.GetWeightMap();
 
 			if (temp != null)
 			{
@@ -86,12 +87,26 @@ public class PathFindToPlayer : StateMachineBehaviour
 
 			Cell enemyCell = Grid.Instance.GetCellFromWorldPoint(animator.transform.position);
 
-            float[,] wightmap = Grid.Instance.GetWeightMap();
-
 
 			if (wightmap[enemyCell.GridX, enemyCell.GridY] != -1)
             {
-                lost = false;
+				Cell[] neighboursGoal = Grid.Instance.GetNeighbours(goalCell);
+
+				float bestDistGoal = float.MaxValue;
+				foreach (Cell neighbour in neighboursGoal)
+				{
+					if (wightmap[neighbour.GridX, neighbour.GridY] == -1) continue;
+
+					if (Vector3.Distance(neighbour.WorldPos, goalCell.WorldPos) < bestDistGoal)
+					{
+						temp = neighbour;
+						bestDistGoal = Vector3.Distance(neighbour.WorldPos, enemyCell.WorldPos);
+
+					}
+				}
+
+                goalCell = temp;
+				lost = false;
                 return;
             }
 
@@ -109,7 +124,7 @@ public class PathFindToPlayer : StateMachineBehaviour
 
 				}
             }
-
+            return;
         }
 
         // is path valid? else get new path

@@ -91,6 +91,8 @@ public class Grid : MonoBehaviour
 	{
 		float percentX = (worldPosition.x + gridWorldSize.x / 2) / gridWorldSize.x;
 		float percentY = (worldPosition.z + gridWorldSize.y / 2) / gridWorldSize.y;
+		//float percentX = (worldPosition.x - (transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2).x) / gridWorldSize.x;
+		//float percentY = (worldPosition.z - (transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2).z) / gridWorldSize.y;
 		percentX = Mathf.Clamp01(percentX);
 		percentY = Mathf.Clamp01(percentY);
 
@@ -137,12 +139,12 @@ public class Grid : MonoBehaviour
 
 		if (grid != null)
 		{
-			/*foreach (Cell cell in grid)
+			foreach (Cell cell in grid)
 			{
 				Gizmos.color = (cell.Walkable) ? Color.white : Color.red;
 
 				Gizmos.DrawCube(cell.WorldPos, Vector3.one * (cellDiameter - 0.1f));
-			}*/
+			}
 
 			//Cell fromCell = GetCellFromWorldPoint(from.position);
 			//Cell toCell = GetCellFromWorldPoint(to.position);

@@ -1,10 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ModifyerType
+{
+    damage,
+    movementSpeed,
+}
+
 public class PlayerShit : MonoBehaviour
 {
-    [SerializeField] private float baseMoveSpeed = 100f;
+    #region Singleton
+    public static PlayerShit Instance;
+
+	private void OnEnable()
+	{
+		Instance= this;
+	}
+    #endregion
+
+    public static event EventHandler<(ModifyerType, double)> ModifierChange;
+
+	[SerializeField] private float baseMoveSpeed = 100f;
     [SerializeField] private float baseMaxHealth = 1000;
     [SerializeField] private float baseHealthRegen = 100;
     [SerializeField] private float baseDodgeRate = 1000;
@@ -17,6 +35,36 @@ public class PlayerShit : MonoBehaviour
     private float currentDodgeRate;
     private float currentArmor;
     private float currentCharSize;
+
+    List<(ModifyerType, double)> modifiers;
+
+    public double GetModifier(ModifyerType modifyerType)
+    {
+        double value = 1f;
+
+        foreach ((ModifyerType, double) modifier in modifiers)
+        {
+            if(modifier.Item1 == modifyerType)
+            {
+                value *= modifier.Item2;
+            }
+        }
+
+        return value;
+    }
+
+	public void AddModifier(ModifyerType modifyerType, double value)
+    {
+        (ModifyerType, double) tupple = (modifyerType, value);
+        modifiers.Add(tupple);
+
+		OnModifierChange(modifyerType, value);
+    }
+
+    private void OnModifierChange(ModifyerType modifyerType, double value)
+    {
+		(ModifyerType, double) tupple = (modifyerType, value);
+	}
 
     void Start()
     {
@@ -33,4 +81,9 @@ public class PlayerShit : MonoBehaviour
     {
         
     }
+
+	private void OnDisable()
+	{
+		
+	}
 }

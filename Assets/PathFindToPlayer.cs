@@ -36,15 +36,10 @@ public class PathFindToPlayer : StateMachineBehaviour
             return;
         }
 
-		var result = await Task.Run(() =>
+		path = await Task.Run(() =>
         {
 			return AStar<Cell>.PathFind(grid, weightMap, enemyCell.GridX, enemyCell.GridY, goalCellCoppy.GridX, goalCellCoppy.GridY, cancellationToken);
 		}, cancellationToken.Token);
-
-        if(result != null)
-        {
-            path = result;
-        }
 
         if(path.Length <= 1)
         {

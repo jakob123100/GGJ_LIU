@@ -8,15 +8,13 @@ public class Shoot : MonoBehaviour
     [SerializeField] private GameObject flash;
     [SerializeField] private CharacterControls movementScript;
     [SerializeField] private AnimationCurve bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings;
+    [SerializeField] private AudioSource pangSource;
+    [SerializeField] private AudioClip pang;
 
     [SerializeField] private float shootingForce = 50f;
     [SerializeField] private float fireRate = 0.5f;
     [SerializeField] private float bulletSpread = 0f;
     [SerializeField] private float scale = 1f;
-    [SerializeField] private CharacterControls movementScript;
-    [SerializeField] private AudioSource pangSource;
-    [SerializeField] private AudioClip pang;
-
     [SerializeField] private float knockback = 10f;
     [SerializeField] private float bulletSpreadTime = 0f;
 
@@ -34,7 +32,6 @@ public class Shoot : MonoBehaviour
 
     private void DoTheShoot()
     {
-        RaycastHit hit;
 
         currentBulletSpread = Mathf.Min(currentBulletSpread + bulletSpreadTime * Time.deltaTime, bulletSpread);
         float direction = Random.Range(-currentBulletSpread, currentBulletSpread);
@@ -57,7 +54,7 @@ public class Shoot : MonoBehaviour
                 currentTime = Time.time + 0.2f;
             }
 
-            if (!Physics.Raycast(movementScript.gameObject.transform.position, new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z), out hit, 1))
+            if (!Physics.Raycast(movementScript.gameObject.transform.position, new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z), out RaycastHit hit, 1))
             {
             movementScript.gameObject.transform.position += new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z);
             }

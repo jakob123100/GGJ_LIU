@@ -27,7 +27,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  stopRange: 1
+  stopRange: 2
   acceptableGoalError: 2
   rotationSpeed: 100
 --- !u!1102 &-4210106257063754027

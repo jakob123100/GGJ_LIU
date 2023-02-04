@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ModifyerType
+public enum ModifierType
 {
     damage,
     movementSpeed,
@@ -23,7 +23,7 @@ public class PlayerShit : MonoBehaviour
 	}
     #endregion
 
-    public static event EventHandler<(ModifyerType, double)> ModifierChange;
+    public static event EventHandler<(ModifierType, double)> ModifierChange;
 
 	[SerializeField] private float baseMoveSpeed = 100f;
     [SerializeField] private float baseMaxHealth = 1000;
@@ -39,13 +39,13 @@ public class PlayerShit : MonoBehaviour
     private float currentArmor;
     private float currentCharSize;
 
-    List<(ModifyerType, double)> modifiers;
+    List<(ModifierType, double)> modifiers;
 
-    public double GetModifier(ModifyerType modifyerType)
+    public double GetModifier(ModifierType modifyerType)
     {
         double value = 1f;
 
-        foreach ((ModifyerType, double) modifier in modifiers)
+        foreach ((ModifierType, double) modifier in modifiers)
         {
             if(modifier.Item1 == modifyerType)
             {
@@ -56,17 +56,24 @@ public class PlayerShit : MonoBehaviour
         return value;
     }
 
-	public void AddModifier(ModifyerType modifyerType, double value)
-    {
-        (ModifyerType, double) tupple = (modifyerType, value);
-        modifiers.Add(tupple);
+	public void AddModifier(ModifierType modifyerType, double value)
+	{
+		(ModifierType, double) tupple = (modifyerType, value);
+		modifiers.Add(tupple);
 
 		OnModifierChange(modifyerType, value);
-    }
+	}
 
-    private void OnModifierChange(ModifyerType modifyerType, double value)
+	public void AddModifier((ModifierType, double) modifier)
+	{
+		modifiers.Add(modifier);
+
+		OnModifierChange(modifier.Item1, modifier.Item2);
+	}
+
+	private void OnModifierChange(ModifierType modifyerType, double value)
     {
-		(ModifyerType, double) change = (modifyerType, value);
+		(ModifierType, double) change = (modifyerType, value);
         ModifierChange?.Invoke(this, change);
 	}
 

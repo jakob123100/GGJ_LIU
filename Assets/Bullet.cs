@@ -8,21 +8,36 @@ public class Bullet : MonoBehaviour
     Vector3 direction;
     public int damage;
     GameObject parent;
+    AnimationCurve speedOverLifetime;
+    float startTime = 0f;
+    float lifetime;
 
-    public static void CreateComponent(GameObject gameObject, float speed, Vector3 direction, int damage, float scale, GameObject parent = null, float destroyDelay = 3f)
+
+	public static void CreateComponent(GameObject gameObject, float speed, Vector3 direction, int damage, float scale, GameObject parent = null, float destroyDelay = 3f, AnimationCurve speedOverLifetime = null)
     {
         Bullet component = gameObject.AddComponent<Bullet>();
         component.speed = speed;
         component.direction = direction;
         component.damage = damage;
         component.parent = parent;
+        component.startTime = Time.time;
+        component.speedOverLifetime = speedOverLifetime;
+        component.lifetime = destroyDelay;
         gameObject.transform.localScale = scale * Vector3.one;
         Destroy(gameObject, destroyDelay);
     }
 
     public void Update()
     {
-        transform.position += direction * speed * Time.deltaTime;
+        float stepSize = speed * Time.deltaTime;
+        lifetime += Time.deltaTime;
+
+        if(speedOverLifetime != null)
+        {
+            stepSize *= speedOverLifetime.Evaluate((Time.time - startTime) / lifetime);
+        }
+
+        transform.position += direction * stepSize;
     }
 
 	private void OnCollisionEnter(Collision collision)

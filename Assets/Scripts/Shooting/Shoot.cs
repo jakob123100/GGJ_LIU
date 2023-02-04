@@ -17,21 +17,26 @@ public class Shoot : MonoBehaviour
     [SerializeField] private float scale = 1f;
     [SerializeField] private float knockback = 10f;
     [SerializeField] private float bulletSpreadTime = 0f;
+    [SerializeField] private float reloadSpeed = 1f;
 
+    [SerializeField] private int magazineSize = 64;
     [SerializeField] private int damage;
 
     private float currentBulletSpread;
     private float timeUntilNextBullet;
+    private float currentMag;
 
     private Vector3 directionVector;
 
     private void Start()
     {
         directionVector = transform.forward;
+        currentMag = magazineSize;
     }
 
     private void DoTheShoot()
     {
+        currentMag--;
 
         currentBulletSpread = Mathf.Min(currentBulletSpread + bulletSpreadTime * Time.deltaTime, bulletSpread);
         float direction = Random.Range(-currentBulletSpread, currentBulletSpread);
@@ -60,12 +65,25 @@ public class Shoot : MonoBehaviour
             }
     }
 
+    private void Reload()
+    {
+        currentMag = magazineSize;
+        timeUntilNextBullet = (float)(Time.time + ((0.2 * 10) / reloadSpeed));
+    }
+
     private void FixedUpdate()
     {
-        if (Input.GetMouseButton(0) && Time.time > timeUntilNextBullet && movementScript.allowedToMove)
+        if (Input.GetMouseButton(0) 
+            && Time.time > timeUntilNextBullet 
+            && movementScript.allowedToMove 
+            && currentMag >= 0)
         {
             timeUntilNextBullet = Time.time + fireRate;
             DoTheShoot();
+        }
+        else if (currentMag <= 0 || Input.GetKey(KeyCode.R))
+        {
+            Reload();
         }
         else
         {

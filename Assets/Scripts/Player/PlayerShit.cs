@@ -9,7 +9,9 @@ public enum ModifierType
     movementSpeed,
     maxHealth,
     healthRegen,
-    charScale
+    charScale,
+    magazineSize,
+    reloadSpeed
 }
 
 public class PlayerShit : MonoBehaviour

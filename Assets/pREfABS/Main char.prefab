@@ -293,8 +293,9 @@ MonoBehaviour:
   fireRate: 0.1
   bulletSpread: 0.2
   damage: 10
-  scale: 3
+  scale: 2
   movementScript: {fileID: 6428894113192720797}
+  knockback: 10
   bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings:
     serializedVersion: 2
     m_Curve:

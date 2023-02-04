@@ -613,7 +613,7 @@ PrefabInstance:
     - target: {fileID: 6428894113261445953, guid: d6a83ccb7afc18244b156f8047aa8d5f,
         type: 3}
       propertyPath: scale
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6428894113261445953, guid: d6a83ccb7afc18244b156f8047aa8d5f,
         type: 3}
@@ -1601,6 +1601,76 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.data[0].time
+      value: -0.0027427673
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.data[1].time
+      value: 0.6892175
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.data[2].time
+      value: 0.998291
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.data[0].value
+      value: 1.0014648
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.data[1].value
+      value: 0.7302931
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.data[2].value
+      value: 0.4800682
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.data[1].inSlope
+      value: -1.3080369
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.data[2].inSlope
+      value: -0.7136385
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.data[1].inWeight
+      value: 0.05976472
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.data[1].outSlope
+      value: -1.3080369
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.data[2].inWeight
+      value: 0.25732183
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.data[2].outSlope
+      value: -0.7136385
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999044718795549912, guid: 6aa60045c77fa364dbb3266bc0151510,
+        type: 3}
+      propertyPath: speedOverLifetime.m_Curve.Array.data[1].outWeight
+      value: 0.19143431
+      objectReference: {fileID: 0}
     - target: {fileID: 7999044718795549919, guid: 6aa60045c77fa364dbb3266bc0151510,
         type: 3}
       propertyPath: m_RootOrder

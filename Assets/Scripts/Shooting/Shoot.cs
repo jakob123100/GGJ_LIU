@@ -12,6 +12,8 @@ public class Shoot : MonoBehaviour
     [SerializeField] private float scale = 1f;
     [SerializeField] private CharacterControls movementScript;
 
+    [SerializeField] private float knockback = 10f;
+
     [SerializeField] private AnimationCurve bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings;
 
     private float currentBulletSpread;
@@ -43,6 +45,9 @@ public class Shoot : MonoBehaviour
                     Quaternion.LookRotation(directionVector));
 
                 Bullet.CreateComponent(bullet, shootingForce, directionVector, damage, scale, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
+
+                movementScript.gameObject.transform.position += 
+                    new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z);
             }
         }
     }

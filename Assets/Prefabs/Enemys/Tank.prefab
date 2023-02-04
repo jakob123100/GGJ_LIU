@@ -35,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7999044718795549916
 MeshFilter:
@@ -156,11 +156,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e271933d2012df45a87a76c55ef5ed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountOfBullts: 10
+  amountOfBullts: 12
   bulletDamage: 3
-  bulletSpeed: 8
+  bulletSpeed: 15
   fireRate: 1
+  scale: 5
   bulletPrefab: {fileID: 6903537214554798692, guid: 5391e55b9595ac44c8295408971dff55,
     type: 3}
   bulletDestroyDelay: 4
   bulletSpawnOffset: {x: 0, y: 0, z: 0}
+  speedOverLifetime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0021400452
+      value: 1.4140778
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.32026
+      value: 1.0274656
+      inSlope: -3.8470948
+      outSlope: -3.8470948
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.05976472
+      outWeight: 0.03922804
+    - serializedVersion: 3
+      time: 0.998291
+      value: 0.4800682
+      inSlope: -0.7136385
+      outSlope: -0.7136385
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.25732183
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

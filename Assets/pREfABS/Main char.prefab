@@ -669,11 +669,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7619b2f4f1291904585f55c76e4c6ec8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 10
+  MaxHealth: 40
   health: 0
   mat: {fileID: 3740087655702690268}
   flashTime: 0.2
-  healthRegAsterSeconds: 10
+  healthRegAsterSeconds: 2
 --- !u!1 &6428894113261445955
 GameObject:
   m_ObjectHideFlags: 0

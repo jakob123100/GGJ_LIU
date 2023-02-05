@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ShootAOEProjectiles : MonoBehaviour
 {
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform popupPrefab;
+
+	[SerializeField] private GameObject bulletPrefab;
     [SerializeField] private AnimationCurve speedOverLifetime;
     [SerializeField] private Vector3 bulletSpawnOffset = Vector3.zero;
 
@@ -60,7 +62,8 @@ public class ShootAOEProjectiles : MonoBehaviour
                 scale,
                 gameObject.tag,
                 bulletDestroyDelay,
-                speedOverLifetime);
+                speedOverLifetime,
+				popupPrefab);
         }
     }
 

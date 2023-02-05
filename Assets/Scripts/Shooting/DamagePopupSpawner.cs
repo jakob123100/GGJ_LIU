@@ -18,10 +18,11 @@ public class DamagePopupSpawner : MonoBehaviour
     private TextMeshPro textMesh;
     private Color textColor;
 
-    public static DamagePopupSpawner Create(Vector3 position, int damage)
+    public static DamagePopupSpawner Create(Vector3 position, int damage, Transform popupPrefab)
     {
-        Transform popupPrefab = 
-            AssetDatabase.LoadAssetAtPath<Transform>("Assets/pREfABS/DamagePopup.prefab");
+        //Transform popupPrefab = 
+        //    AssetDatabase.LoadAssetAtPath<Transform>("Assets/pREfABS/DamagePopup.prefab");
+
 
         Transform damagePopupTransform = Instantiate(
             popupPrefab,

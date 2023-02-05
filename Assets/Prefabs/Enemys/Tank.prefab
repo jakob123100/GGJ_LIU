@@ -255,6 +255,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e271933d2012df45a87a76c55ef5ed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popupPrefab: {fileID: 2877128370760074416, guid: 51c250d527000184481730271ad2c974,
+    type: 3}
   bulletPrefab: {fileID: 6903537214554798692, guid: 5391e55b9595ac44c8295408971dff55,
     type: 3}
   speedOverLifetime:

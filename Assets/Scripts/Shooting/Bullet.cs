@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed;
+    private Transform popupPrefab;
+
+
+	public float speed;
     public int damage;
     Vector3 direction;
     string parentFaction;
@@ -13,7 +17,7 @@ public class Bullet : MonoBehaviour
     float lifetime;
 
 
-	public static void CreateComponent(GameObject gameObject, float speed, Vector3 direction, int damage, float scale, string parent = null, float destroyDelay = 3f, AnimationCurve speedOverLifetime = null)
+	public static void CreateComponent(GameObject gameObject, float speed, Vector3 direction, int damage, float scale, string parent = null, float destroyDelay = 3f, AnimationCurve speedOverLifetime = null, Transform popupPrefab = null)
     {
         Bullet component = gameObject.AddComponent<Bullet>();
         component.speed = speed;
@@ -24,7 +28,9 @@ public class Bullet : MonoBehaviour
         component.speedOverLifetime = speedOverLifetime;
         component.lifetime = destroyDelay;
         gameObject.transform.localScale = scale * Vector3.one;
-        Destroy(gameObject, destroyDelay);
+		component.popupPrefab = popupPrefab;
+
+		Destroy(gameObject, destroyDelay);
     }
 
     public void FixedUpdate()
@@ -58,7 +64,7 @@ public class Bullet : MonoBehaviour
 			other.TakeDamage(damage);
 
             Vector3 collisionPoint = collision.GetContact(0).point;
-            DamagePopupSpawner.Create(collisionPoint, damage);
+            DamagePopupSpawner.Create(collisionPoint, damage, popupPrefab);
 			return; 
         }
 

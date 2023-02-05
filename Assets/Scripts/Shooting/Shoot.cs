@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    [SerializeField] private GameObject objectToShoot;
+    [SerializeField] private Transform popupPrefab;
+
+	[SerializeField] private GameObject objectToShoot;
     [SerializeField] private GameObject flash;
     [SerializeField] private CharacterControls movementScript;
     [SerializeField] private AnimationCurve bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings;
@@ -101,7 +103,7 @@ public class Shoot : MonoBehaviour
                 Quaternion.LookRotation(directionVector));
 
                 //TODO: add bullet amount
-                Bullet.CreateComponent(bullet, bulletSpeed, directionVector, damage, scale, parent: gameObject.tag, destroyDelay: bulletLifetime, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
+                Bullet.CreateComponent(bullet, bulletSpeed, directionVector, damage, scale, parent: gameObject.tag, destroyDelay: bulletLifetime, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings, popupPrefab : popupPrefab);
 
             bulletsToFire--;
 

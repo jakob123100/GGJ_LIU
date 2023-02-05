@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffModifier: 11
-  buffValue: 1.35
+  buffValue: 2
   debuffModifier: 9
   debuffValue: 1.35
 --- !u!61 &7967870409684608791

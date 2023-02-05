@@ -58,7 +58,7 @@ public class ShootAOEProjectiles : MonoBehaviour
                 direction,
                 bulletDamage,
                 scale,
-                gameObject,
+                gameObject.tag,
                 bulletDestroyDelay,
                 speedOverLifetime);
         }

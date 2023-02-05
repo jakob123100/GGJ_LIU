@@ -101,7 +101,7 @@ public class Shoot : MonoBehaviour
                 Quaternion.LookRotation(directionVector));
 
                 //TODO: add bullet amount
-                Bullet.CreateComponent(bullet, bulletSpeed, directionVector, damage, scale, parent: gameObject, destroyDelay: bulletLifetime, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
+                Bullet.CreateComponent(bullet, bulletSpeed, directionVector, damage, scale, parent: gameObject.tag, destroyDelay: bulletLifetime, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
 
             bulletsToFire--;
 

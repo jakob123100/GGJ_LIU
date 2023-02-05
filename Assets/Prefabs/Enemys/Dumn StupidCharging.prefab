@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1125963783256559199}
   m_Layer: 0
   m_Name: Dumn StupidCharging
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

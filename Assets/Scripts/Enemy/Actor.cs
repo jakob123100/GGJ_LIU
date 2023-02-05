@@ -7,9 +7,9 @@ public class Actor : MonoBehaviour
     public int MaxHealth = 10;
 
 	[SerializeField] protected int health;
-    [SerializeField] private GameObject mat;
-    private float currentTime;
-    [SerializeField] private float flashTime;
+    [SerializeField] protected GameObject mat;
+	protected float currentTime;
+    [SerializeField] protected float flashTime;
 
     protected bool IsDead()
     {
@@ -22,12 +22,13 @@ public class Actor : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void TakeDamage(int damage)
-    {
-        if(mat != null)
+	public void TakeDamage(int damage)
+	{
+		health -= damage;
+
+		if (mat != null)
         {
             currentTime = Time.time + flashTime;
-            health -= damage;
             mat.GetComponent<Renderer>().material.color = Color.red;
         }
 
@@ -37,7 +38,7 @@ public class Actor : MonoBehaviour
         }
     }
 
-	protected void Start()
+	virtual protected void Start()
 	{
         health = MaxHealth;
     }

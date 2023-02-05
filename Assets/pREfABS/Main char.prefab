@@ -671,8 +671,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 10
   health: 0
-  mat: {fileID: 0}
-  flashTime: 0
+  mat: {fileID: 3740087655702690268}
+  flashTime: 0.2
   healthRegAsterSeconds: 10
 --- !u!1 &6428894113261445955
 GameObject:

@@ -93,7 +93,7 @@ MonoBehaviour:
   buffModifier: 1
   buffValue: 1.25
   debuffModifier: 3
-  debuffValue: 0.5
+  debuffValue: 0.2
 --- !u!61 &2129552570234802764
 BoxCollider2D:
   m_ObjectHideFlags: 0

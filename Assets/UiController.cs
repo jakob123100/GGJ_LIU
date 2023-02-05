@@ -12,7 +12,7 @@ public class UiController : MonoBehaviour
 	private void Start()
 	{
 		killCount = GameController.Instance.killCount;
-		killCountText.text = $"Kill Count: {GameController.Instance.killCount}";
+		killCountText.text = $"Score: {GameController.Instance.killCount}";
 	}
 
 	// Update is called once per frame
@@ -21,7 +21,7 @@ public class UiController : MonoBehaviour
         if(GameController.Instance.killCount != killCount)
         {
             killCount = GameController.Instance.killCount;
-			killCountText.text = $"Kill Count: {GameController.Instance.killCount}";
+			killCountText.text = $"Score: {GameController.Instance.killCount}";
 		}
     }
 }

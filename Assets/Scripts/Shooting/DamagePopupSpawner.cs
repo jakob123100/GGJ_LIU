@@ -9,8 +9,11 @@ public class DamagePopupSpawner : MonoBehaviour
     [SerializeField] private float floatingUpSpeed = 4f;
     [SerializeField] private float floatingSideSpeed = 4f;
     [SerializeField] private float dissapearSpeed = 2f;
-    [SerializeField] private float deathTimer = 0.7f;
+    [SerializeField] private float maxDeathTimer = 1f;
+    [SerializeField] private float inflateSpeed = 1f;
+ 
 
+    private float deathTimer;
     private float randomSideSpeed;
     private TextMeshPro textMesh;
     private Color textColor;
@@ -57,9 +60,26 @@ public class DamagePopupSpawner : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void ScaleChange()
+    {
+        //Inflates
+        if(deathTimer > maxDeathTimer / 2)
+        {
+            transform.localScale += 
+                inflateSpeed * Time.fixedDeltaTime * Vector3.one;
+        }
+        //Deflates
+        else
+        {
+            transform.localScale -=
+                inflateSpeed * Time.fixedDeltaTime * Vector3.one;
+        }
+    }
+
+    private void FixedUpdate()
     {
         FloatUp();
+        ScaleChange();
 
         deathTimer -= Time.fixedDeltaTime;
         if(deathTimer < 0)
@@ -70,6 +90,8 @@ public class DamagePopupSpawner : MonoBehaviour
 
     private void Awake()
     {
+        deathTimer = maxDeathTimer;
+
         randomSideSpeed = Random.Range(
             -floatingSideSpeed,
             floatingSideSpeed);

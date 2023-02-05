@@ -8,9 +8,12 @@ public class DamagePopupSpawner : MonoBehaviour
 {
     [SerializeField] private float floatingUpSpeed = 4f;
     [SerializeField] private float floatingSideSpeed = 4f;
+    [SerializeField] private float dissapearSpeed = 2f;
+    [SerializeField] private float deathTimer = 0.7f;
 
     private float randomSideSpeed;
     private TextMeshPro textMesh;
+    private Color textColor;
 
     public static DamagePopupSpawner Create(Vector3 position, int damage)
     {
@@ -33,9 +36,9 @@ public class DamagePopupSpawner : MonoBehaviour
     private void FloatUp()
     {
         transform.position += new Vector3(
-            0, 
-            floatingUpSpeed, 
-            randomSideSpeed) * Time.fixedDeltaTime;
+            randomSideSpeed, 
+            floatingUpSpeed,
+            0) * Time.fixedDeltaTime;
     }
 
     private void SetDamage(int damage)
@@ -43,9 +46,26 @@ public class DamagePopupSpawner : MonoBehaviour
         textMesh.SetText(damage.ToString());
     }
 
+    private void DeathFade()
+    {
+        textColor.a -= dissapearSpeed * Time.fixedDeltaTime;
+        textMesh.color = textColor;
+
+        if(textColor.a <= 0 )
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Update()
     {
         FloatUp();
+
+        deathTimer -= Time.fixedDeltaTime;
+        if(deathTimer < 0)
+        {
+            DeathFade();
+        }
     }
 
     private void Awake()
@@ -54,5 +74,7 @@ public class DamagePopupSpawner : MonoBehaviour
             -floatingSideSpeed,
             floatingSideSpeed);
         textMesh = transform.GetComponent<TextMeshPro>();
+
+        textColor = textMesh.color;
     }
 }

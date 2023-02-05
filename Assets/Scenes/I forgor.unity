@@ -34035,7 +34035,7 @@ PrefabInstance:
     - target: {fileID: 4885059445941163975, guid: 0e425f83f18c6144dad344a4855ee86f,
         type: 3}
       propertyPath: skillPrefabs.Array.size
-      value: 11
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 4885059445941163975, guid: 0e425f83f18c6144dad344a4855ee86f,
         type: 3}
@@ -34102,6 +34102,48 @@ PrefabInstance:
       propertyPath: skillPrefabs.Array.data[10]
       value: 
       objectReference: {fileID: 1319144882353216264, guid: 822c8e2534c2aab478559bbb14001daf,
+        type: 3}
+    - target: {fileID: 4885059445941163975, guid: 0e425f83f18c6144dad344a4855ee86f,
+        type: 3}
+      propertyPath: skillPrefabs.Array.data[11]
+      value: 
+      objectReference: {fileID: 1319144882353216264, guid: c762a7bbf99ae8d45beb619f2f0807e4,
+        type: 3}
+    - target: {fileID: 4885059445941163975, guid: 0e425f83f18c6144dad344a4855ee86f,
+        type: 3}
+      propertyPath: skillPrefabs.Array.data[12]
+      value: 
+      objectReference: {fileID: 1319144882353216264, guid: dfb11e465a394684da4c5f879aff6380,
+        type: 3}
+    - target: {fileID: 4885059445941163975, guid: 0e425f83f18c6144dad344a4855ee86f,
+        type: 3}
+      propertyPath: skillPrefabs.Array.data[13]
+      value: 
+      objectReference: {fileID: 1319144882353216264, guid: 23dadbf69e6a1cd4bbb2a2910a45ba78,
+        type: 3}
+    - target: {fileID: 4885059445941163975, guid: 0e425f83f18c6144dad344a4855ee86f,
+        type: 3}
+      propertyPath: skillPrefabs.Array.data[14]
+      value: 
+      objectReference: {fileID: 1319144882353216264, guid: 4d57cb92889e74d459592a769863a2a1,
+        type: 3}
+    - target: {fileID: 4885059445941163975, guid: 0e425f83f18c6144dad344a4855ee86f,
+        type: 3}
+      propertyPath: skillPrefabs.Array.data[15]
+      value: 
+      objectReference: {fileID: 1319144882353216264, guid: 31d2d7b71d5f70a458e56786c51488e5,
+        type: 3}
+    - target: {fileID: 4885059445941163975, guid: 0e425f83f18c6144dad344a4855ee86f,
+        type: 3}
+      propertyPath: skillPrefabs.Array.data[16]
+      value: 
+      objectReference: {fileID: 1319144882353216264, guid: 049ade22009ff0b49b1ba58fd2c09710,
+        type: 3}
+    - target: {fileID: 4885059445941163975, guid: 0e425f83f18c6144dad344a4855ee86f,
+        type: 3}
+      propertyPath: skillPrefabs.Array.data[17]
+      value: 
+      objectReference: {fileID: 1319144882353216264, guid: 049ade22009ff0b49b1ba58fd2c09710,
         type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

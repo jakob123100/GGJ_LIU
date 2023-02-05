@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
-    [SerializeField] int maxHealth = 10;
+    public int MaxHealth = 10;
 
-	[SerializeField] int health;
+	[SerializeField] protected int health;
 
-    private bool IsDead()
+	protected bool IsDead()
     {
         return health <= 0;
     }
 
-    private void Die()
+	protected void Die()
     {
         Destroy(gameObject);
     }
@@ -27,8 +27,8 @@ public class Actor : MonoBehaviour
         }
     }
 
-	private void Start()
+	protected void Start()
 	{
-        health = maxHealth;
+        health = MaxHealth;
 	}
 }

@@ -53,13 +53,12 @@ public class SkillTreeGenerator : MonoBehaviour
 
 	private void TraverseLeft()
 	{
-		TreeHeight--;
 		SkillNode[] newTree = new SkillNode[skillTree.Length - TreeHeight];
 
 		int i = 0;
 		int j = 0;
 
-		for (int y = 0; y < TreeHeight + 1; y++)
+		for (int y = 0; y < TreeHeight; y++)
 		{
 			for (int x = 0; x < y; x++)
 			{
@@ -72,20 +71,23 @@ public class SkillTreeGenerator : MonoBehaviour
 			j++;
 		}
 
+		TreeHeight--;
+
 		skillTree = newTree;
+
+		GenerateLevel();
 
 		UpdateSkillObjectsPos();
 	}
 
 	private void TraverseRight()
 	{
-		TreeHeight--;
 		SkillNode[] newTree = new SkillNode[skillTree.Length - TreeHeight];
 
 		int i = 0;
 		int j = 0;
 
-		for (int y = 0; y < TreeHeight + 1; y++)
+		for (int y = 0; y < TreeHeight; y++)
 		{
 			Destroy(skillTree[j].skillScript.gameObject);
 			j++;
@@ -98,7 +100,11 @@ public class SkillTreeGenerator : MonoBehaviour
 			}
 		}
 
+		TreeHeight--;
+
 		skillTree = newTree;
+
+		GenerateLevel();
 
 		UpdateSkillObjectsPos();
 	}

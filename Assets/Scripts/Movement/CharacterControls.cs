@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CharacterControls : MonoBehaviour
 {
@@ -10,10 +11,11 @@ public class CharacterControls : MonoBehaviour
 	private void OnEnable()
 	{
 		Instance = this;
+		PlayerShit.Instance.ModifierChange += ModifierChange;
 	}
     #endregion
 
-    public float velocity;
+    public float speed;
 
     [SerializeField] private Camera cam;
 
@@ -24,8 +26,57 @@ public class CharacterControls : MonoBehaviour
     [SerializeField] private float dashDuration;
     [SerializeField] private float dashStrenght;
     [SerializeField] private ParticleSystem dashParticleEffect;
+    PlayerActor playerActor = null;
 
-    private void PleaseMove()
+	private void ModifierChange(object sender, (ModifierType modifierType, double value) modifier)
+	{
+        if(playerActor == null)
+		{
+			playerActor = gameObject.GetComponent<PlayerActor>();
+		}
+
+		switch (modifier.modifierType)
+		{
+			case ModifierType.damage:
+				break;
+			case ModifierType.movementSpeed:
+				speed = (float)(speed * modifier.value);
+				break;
+			case ModifierType.maxHealth:
+                if (playerActor == null) { break; }
+				playerActor.MaxHealth = (int)(playerActor.MaxHealth * modifier.value);
+				break;
+			case ModifierType.healthRegen:
+				if (playerActor == null) { break; }
+				playerActor.healthRegAsterSeconds = (float)(playerActor.healthRegAsterSeconds / modifier.value);
+				break;
+			case ModifierType.charScale:
+                gameObject.transform.localScale *= (float)modifier.value;
+				break;
+			case ModifierType.magazineSize:
+				break;
+			case ModifierType.reloadSpeed:
+				break;
+			case ModifierType.bulletScale:
+                break;
+			case ModifierType.bulletLifetime:
+				break;
+			case ModifierType.fireRate:
+				break;
+			case ModifierType.knockback:
+				break;
+			case ModifierType.bulletSpread:
+				break;
+			case ModifierType.bulletAmount:
+				break;
+			case ModifierType.projectileSpeed:
+				break;
+			default:
+				break;
+		}
+	}
+
+	private void PleaseMove()
     {
         RaycastHit hit;
 
@@ -33,37 +84,37 @@ public class CharacterControls : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.W))
             {
-                if (!Physics.Raycast(transform.position, Time.deltaTime * velocity * new Vector3(0, 0, 1), out hit, 1))
+                if (!Physics.Raycast(transform.position, Time.deltaTime * speed * new Vector3(0, 0, 1), out hit, 1))
                 {
 
                     gameObject.transform.position +=
-                    Time.deltaTime * velocity * new Vector3(0, 0, 1);
+                    Time.deltaTime * speed * new Vector3(0, 0, 1);
                 }
             }
             if (Input.GetKey(KeyCode.S))
             {
-                if (!Physics.Raycast(transform.position, Time.deltaTime * -velocity * new Vector3(0, 0, 1), out hit, 1))
+                if (!Physics.Raycast(transform.position, Time.deltaTime * -speed * new Vector3(0, 0, 1), out hit, 1))
                 {
 
                     gameObject.transform.position +=
-                    Time.deltaTime * -velocity * new Vector3(0, 0, 1);
+                    Time.deltaTime * -speed * new Vector3(0, 0, 1);
                 }
             }
             if (Input.GetKey(KeyCode.D))
             {
-                if (!Physics.Raycast(transform.position, Time.deltaTime * velocity * new Vector3(1, 0, 0), out hit, 1))
+                if (!Physics.Raycast(transform.position, Time.deltaTime * speed * new Vector3(1, 0, 0), out hit, 1))
                 {
 
                     gameObject.transform.position +=
-                    Time.deltaTime * velocity * new Vector3(1, 0, 0);
+                    Time.deltaTime * speed * new Vector3(1, 0, 0);
                 }
             }
             if (Input.GetKey(KeyCode.A))
             {
-                if (!Physics.Raycast(transform.position, Time.deltaTime * -velocity * new Vector3(1, 0, 0), out hit, 1))
+                if (!Physics.Raycast(transform.position, Time.deltaTime * -speed * new Vector3(1, 0, 0), out hit, 1))
                 {
                     gameObject.transform.position +=
-                    Time.deltaTime * -velocity * new Vector3(1, 0, 0);
+                    Time.deltaTime * -speed * new Vector3(1, 0, 0);
                 }
             }
         }
@@ -129,9 +180,9 @@ public class CharacterControls : MonoBehaviour
 
         if (allowedToMove == false)
         {
-            if (!Physics.Raycast(transform.position, Time.deltaTime * dashSpeed.Evaluate(Time.time - currentTime) * velocity * dashDirection * dashStrenght, out hit, 1))
+            if (!Physics.Raycast(transform.position, Time.deltaTime * dashSpeed.Evaluate(Time.time - currentTime) * speed * dashDirection * dashStrenght, out hit, 1))
             {
-                gameObject.transform.position += Time.deltaTime * dashSpeed.Evaluate(Time.time - currentTime) * velocity * dashDirection * dashStrenght;
+                gameObject.transform.position += Time.deltaTime * dashSpeed.Evaluate(Time.time - currentTime) * speed * dashDirection * dashStrenght;
             }
 
             if (Time.time > currentTime + dashDuration)
@@ -152,4 +203,9 @@ public class CharacterControls : MonoBehaviour
     {
         LookAtMouseCyka();
     }
+
+	private void OnDisable()
+	{
+		PlayerShit.Instance.ModifierChange -= ModifierChange;
+	}
 }

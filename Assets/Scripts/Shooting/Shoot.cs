@@ -11,16 +11,18 @@ public class Shoot : MonoBehaviour
     [SerializeField] private AudioSource pangSource;
     [SerializeField] private AudioClip pang;
 
-    [SerializeField] private float shootingForce = 50f;
+    [SerializeField] private float bulletSpeed = 50f;
     [SerializeField] private float fireRate = 0.5f;
     [SerializeField] private float bulletSpread = 0f;
     [SerializeField] private float scale = 1f;
     [SerializeField] private float knockback = 10f;
     [SerializeField] private float bulletSpreadTime = 0f;
     [SerializeField] private float reloadSpeed = 1f;
+    [SerializeField] private float bulletLifetime = 3f;
 
     [SerializeField] private int magazineSize = 64;
     [SerializeField] private int damage;
+    [SerializeField] private int bulletAmount;
 
     private float currentBulletSpread;
     private float timeUntilNextBullet;
@@ -28,15 +30,105 @@ public class Shoot : MonoBehaviour
 
     private Vector3 directionVector;
 
-    private void Start()
+    private void ModifierChange(object sender, (ModifierType modifierType, double value) modifier)
+    {
+		switch (modifier.modifierType)
+		{
+			case ModifierType.damage:
+				damage = (int)(damage * modifier.value);
+				break;
+			case ModifierType.movementSpeed:
+				break;
+			case ModifierType.maxHealth:
+				break;
+			case ModifierType.healthRegen:
+				break;
+			case ModifierType.charScale:
+				break;
+			case ModifierType.magazineSize:
+				magazineSize = (int)(magazineSize * modifier.value);
+				break;
+			case ModifierType.reloadSpeed:
+				reloadSpeed = (float)(reloadSpeed * modifier.value);
+				break;
+			case ModifierType.bulletScale:
+				scale = (float)(scale * modifier.value);
+				break;
+			case ModifierType.bulletLifetime:
+				bulletLifetime = (float)(bulletLifetime * modifier.value);
+				break;
+			case ModifierType.fireRate:
+				fireRate = (float)(fireRate * modifier.value);
+				break;
+			case ModifierType.knockback:
+				knockback = (float)(knockback * modifier.value);
+				break;
+			case ModifierType.bulletSpread:
+				bulletSpread = (float)(bulletSpread * modifier.value);
+				break;
+			case ModifierType.bulletAmount:
+				bulletAmount = (int)(bulletAmount * modifier.value);
+				break;
+			case ModifierType.projectileSpeed:
+				bulletSpeed = (float)(bulletSpeed * modifier.value);
+				break;
+			default:
+				break;
+		}
+	}
+
+	private void Start()
     {
         directionVector = transform.forward;
         currentMag = magazineSize;
     }
 
+    private IEnumerator FireBullets()
+    {
+        int bulletsToFire = bulletAmount;
+
+        while(bulletsToFire > 0)
+        {
+			currentBulletSpread = Mathf.Min(currentBulletSpread + bulletSpreadTime * Time.deltaTime, bulletSpread);
+			float direction = Random.Range(-currentBulletSpread, currentBulletSpread);
+			directionVector = transform.forward + transform.right * direction;
+
+			flash.SetActive(true);
+
+			GameObject bullet = Instantiate(
+				objectToShoot,
+				transform.position,
+				Quaternion.LookRotation(directionVector));
+
+			//TODO: add bullet amount
+			Bullet.CreateComponent(bullet, bulletSpeed, directionVector, damage, scale, parent: gameObject, destroyDelay: bulletLifetime, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
+
+			float currentTime = 0;
+			if (currentTime < Time.time)
+			{
+				pangSource.pitch = Random.Range(0.9f, 1.1f);
+				pangSource.PlayOneShot(pang, Random.Range(1.9f, 2.1f));
+				currentTime = Time.time + 0.2f;
+			}
+
+			if (!Physics.Raycast(movementScript.gameObject.transform.position, new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z), out RaycastHit hit, 1))
+			{
+				movementScript.gameObject.transform.position += new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z);
+			}
+
+            bulletsToFire--;
+
+			yield return new WaitForSeconds(Random.Range(0.05f, 0.15f));
+        }
+    }
+
     private void DoTheShoot()
     {
-        currentMag--;
+		currentMag--;
+
+        StartCoroutine(FireBullets());
+
+		/*currentMag--;
 
         currentBulletSpread = Mathf.Min(currentBulletSpread + bulletSpreadTime * Time.deltaTime, bulletSpread);
         float direction = Random.Range(-currentBulletSpread, currentBulletSpread);
@@ -49,7 +141,8 @@ public class Shoot : MonoBehaviour
             transform.position,
             Quaternion.LookRotation(directionVector));
 
-        Bullet.CreateComponent(bullet, shootingForce, directionVector, damage, scale, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
+        //TODO: add bullet amount
+        Bullet.CreateComponent(bullet, bulletSpeed, directionVector, damage, scale, parent: gameObject, destroyDelay: bulletLifetime, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
 
             float currentTime = 0;
             if(currentTime < Time.time)
@@ -62,13 +155,13 @@ public class Shoot : MonoBehaviour
             if (!Physics.Raycast(movementScript.gameObject.transform.position, new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z), out RaycastHit hit, 1))
             {
             movementScript.gameObject.transform.position += new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z);
-            }
-    }
+            }*/
+	}
 
     private void Reload()
     {
         currentMag = magazineSize;
-        timeUntilNextBullet = (float)(Time.time + ((0.2 * 10) / reloadSpeed));
+        timeUntilNextBullet = (Time.time + ((0.2f * 10f) / reloadSpeed));
     }
 
     private void FixedUpdate()
@@ -90,4 +183,14 @@ public class Shoot : MonoBehaviour
             currentBulletSpread = Mathf.Max(currentBulletSpread - bulletSpreadTime * 2 * Time.deltaTime, 0);
         }
     }
+
+	private void OnEnable()
+	{
+        PlayerShit.Instance.ModifierChange += ModifierChange;
+	}
+
+	private void OnDisable()
+	{
+		PlayerShit.Instance.ModifierChange -= ModifierChange;
+	}
 }

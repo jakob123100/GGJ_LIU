@@ -11,7 +11,14 @@ public enum ModifierType
     healthRegen,
     charScale,
     magazineSize,
-    reloadSpeed
+    reloadSpeed,
+    bulletScale,
+    bulletLifetime,
+    fireRate,
+    knockback,
+    bulletSpread,
+    bulletAmount,
+    projectileSpeed
 }
 
 public class PlayerShit : MonoBehaviour
@@ -25,7 +32,7 @@ public class PlayerShit : MonoBehaviour
 	}
     #endregion
 
-    public static event EventHandler<(ModifierType, double)> ModifierChange;
+    public event EventHandler<(ModifierType, double)> ModifierChange;
 
 	[SerializeField] private float baseMoveSpeed = 100f;
     [SerializeField] private float baseMaxHealth = 1000;
@@ -41,7 +48,7 @@ public class PlayerShit : MonoBehaviour
     private float currentArmor;
     private float currentCharSize;
 
-    List<(ModifierType, double)> modifiers;
+    List<(ModifierType, double)> modifiers = new List<(ModifierType, double)>();
 
     public double GetModifier(ModifierType modifyerType)
     {

@@ -133,9 +133,6 @@ public class PathFindToPlayer : StateMachineBehaviour
 
 	private void OnDisable()
 	{
-        if(cancellationToken != null)
-		{
-			cancellationToken.Cancel();
-		}
+	    cancellationToken.Cancel();
 	}
 }

@@ -292,8 +292,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   bulletSpawnOffset: {x: 0, y: 0, z: 0}
   bulletSpeed: 8
-  fireRate: 2
-  scale: 5
+  fireRate: 1.6
+  scale: 6
   bulletDestroyDelay: 4
   bulletSpread: 10
   amountOfBullts: 12

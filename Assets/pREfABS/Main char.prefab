@@ -50,7 +50,7 @@ MonoBehaviour:
     type: 3}
   enemyThree: {fileID: 1125963783256559174, guid: de355ee235ea53e42ae3616f303dfe91,
     type: 3}
-  spawnRate: 10
+  spawnRate: 3
 --- !u!1 &3650475881320678817
 GameObject:
   m_ObjectHideFlags: 0

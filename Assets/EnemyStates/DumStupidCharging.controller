@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  stopRange: 5
+  stopRange: 10
   acceptableGoalError: 2
   rotationSpeed: 150
 --- !u!91 &9100000
@@ -159,10 +159,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 982a5bb92bc53d54db726751fd8aba50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
+  maxSpeed: 40
   acceleration: 10
-  rotationSpeed: 50
-  stopChargingDist: 12
+  rotationSpeed: 40
+  stopChargingDist: 15
   acceptableRotationError: 0.5
 --- !u!1102 &3556853901052839739
 AnimatorState:

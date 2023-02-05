@@ -92,8 +92,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buffModifier: 12
   buffValue: 1
-  debuffModifier: 11
-  debuffValue: 2
+  debuffModifier: 0
+  debuffValue: 0.5
 --- !u!61 &4031408234518559553
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -50,9 +50,15 @@ public class Bullet : MonoBehaviour
 		Destroy(gameObject);
 
 		Actor other = collision.gameObject.GetComponent<Actor>();
+        if(other == null) { return; }
+        other.TakeDamage(damage);
+
         if(other != null)
 		{
 			other.TakeDamage(damage);
+
+            Vector3 collisionPoint = collision.GetContact(0).point;
+            DamagePopupSpawner.Create(collisionPoint, damage);
 			return; 
         }
 

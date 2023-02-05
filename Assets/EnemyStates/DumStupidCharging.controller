@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 40
-  acceleration: 10
+  acceleration: 15
   rotationSpeed: 40
   stopChargingDist: 15
   acceptableRotationError: 0.5

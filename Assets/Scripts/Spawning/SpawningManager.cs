@@ -36,6 +36,13 @@ public class SpawningManager : MonoBehaviour
             Random.Range(bottomLeft.z - buffer, topRight.z + buffer)
         );
 
+        Cell spawnCell = Grid.Instance.GetCellFromWorldPoint( spawnPosition );
+        if(!Grid.Instance.IsInBounds(spawnCell.GridX, spawnCell.GridY) || !spawnCell.Walkable)
+        {
+            Spawn();
+            return;
+        }
+
         Instantiate(PickRandomEnemy(), spawnPosition, Quaternion.identity);
     }
 

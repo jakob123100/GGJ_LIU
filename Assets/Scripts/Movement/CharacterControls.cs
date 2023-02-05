@@ -27,8 +27,9 @@ public class CharacterControls : MonoBehaviour
     [SerializeField] private float dashStrenght;
     [SerializeField] private ParticleSystem dashParticleEffect;
     PlayerActor playerActor = null;
+    [SerializeField] private GameObject gun;
 
-	private void ModifierChange(object sender, (ModifierType modifierType, double value) modifier)
+    private void ModifierChange(object sender, (ModifierType modifierType, double value) modifier)
 	{
         if(playerActor == null)
 		{

@@ -24,7 +24,7 @@ public class SpawningManager : MonoBehaviour
         return allEnemies[randomNumber];
     }
 
-    private void Spawn()
+    private void Spawn(int tries = 10)
     {
         //Viewport bounts
         Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, transform.position.y, 0));
@@ -39,7 +39,10 @@ public class SpawningManager : MonoBehaviour
         Cell spawnCell = Grid.Instance.GetCellFromWorldPoint( spawnPosition );
         if(!Grid.Instance.IsInBounds(spawnCell.GridX, spawnCell.GridY) || !spawnCell.Walkable)
         {
-            Spawn();
+            if(tries > 0)
+			{
+				Spawn(tries - 1);
+			}
             return;
         }
 

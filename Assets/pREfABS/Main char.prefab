@@ -1,5 +1,56 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1528675111
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1528675112}
+  - component: {fileID: 1528675113}
+  m_Layer: 0
+  m_Name: SpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1528675112
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528675111}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.5243473, y: -0.2130003, z: 12.197525}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6428894113192720793}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1528675113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528675111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c5f6ea2de0127b42b5dad955ea2eebd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyOne: {fileID: 7999044718795549923, guid: 6aa60045c77fa364dbb3266bc0151510,
+    type: 3}
+  enemyTwo: {fileID: 7999044718795549923, guid: 6aa60045c77fa364dbb3266bc0151510,
+    type: 3}
+  enemyThree: {fileID: 1125963783256559174, guid: de355ee235ea53e42ae3616f303dfe91,
+    type: 3}
+  spawnRate: 10
 --- !u!1 &3650475881320678817
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +194,8 @@ GameObject:
   - component: {fileID: 6428894113192720797}
   - component: {fileID: 6428894113192720798}
   - component: {fileID: 6428894113192720799}
-  - component: {fileID: 8426764671391612506}
+  - component: {fileID: 1751593007}
+  - component: {fileID: 1751593008}
   m_Layer: 0
   m_Name: Main char
   m_TagString: Player
@@ -166,8 +218,9 @@ Transform:
   - {fileID: 6823723502621171156}
   - {fileID: 2513140632247233898}
   - {fileID: 1637201724597422121}
+  - {fileID: 1528675112}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6428894113192720794
 MeshFilter:
@@ -197,7 +250,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 49e2ad3e8e68c6444b47330db4e1ac76, type: 2}
+  - {fileID: 2100000, guid: 5c6aa80e06de7744fad080dc867834fd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -252,7 +305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86c5f56091b5ac498a549cd98f2b562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 8
+  speed: 10
   cam: {fileID: 0}
   allowedToMove: 1
   dashSpeed:
@@ -357,7 +410,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 94
   m_CollisionDetection: 0
---- !u!114 &8426764671391612506
+--- !u!114 &1751593007
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -366,11 +419,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 6428894113192720768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fa33b28a1b4bcf489ce7c36522fcbf4, type: 3}
+  m_Script: {fileID: 11500000, guid: b4c07c0cf498c0e46838644223b4fb05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  baseMoveSpeed: 100
+  baseMaxHealth: 1000
+  baseHealthRegen: 100
+  baseDodgeRate: 1000
+  baseArmor: 1000
+  baseCharSize: 1000
+--- !u!114 &1751593008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6428894113192720768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7619b2f4f1291904585f55c76e4c6ec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 10
   health: 0
+  healthRegAsterSeconds: 10
 --- !u!1 &6428894113261445955
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +454,7 @@ GameObject:
   - component: {fileID: 6428894113261445954}
   - component: {fileID: 6428894113261445953}
   m_Layer: 0
-  m_Name: BulletSpawnPoint
+  m_Name: AR-15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -418,15 +490,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToShoot: {fileID: 6903537214554798692, guid: 5391e55b9595ac44c8295408971dff55,
     type: 3}
-  shootingForce: 100
-  fireRate: 0.1
-  bulletSpread: 0.2
-  damage: 10
-  scale: 2
+  flash: {fileID: 7775357910975894379}
   movementScript: {fileID: 6428894113192720797}
-  pangSource: {fileID: 2182646371460325930}
-  pang: {fileID: 8300000, guid: c561dcb0cfcd97846b641e8feda63f32, type: 3}
-  knockback: 10
   bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings:
     serializedVersion: 2
     m_Curve:
@@ -478,8 +543,19 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  pangSource: {fileID: 2182646371460325930}
+  pang: {fileID: 8300000, guid: c561dcb0cfcd97846b641e8feda63f32, type: 3}
+  bulletSpeed: 50
+  fireRate: 0.1
+  bulletSpread: 0.2
+  scale: 2
+  knockback: 10
   bulletSpreadTime: 6
-  flash: {fileID: 7775357910975894379}
+  reloadSpeed: 1
+  bulletLifetime: 3
+  magazineSize: 64
+  damage: 10
+  bulletAmount: 1
 --- !u!1 &7775357910975894379
 GameObject:
   m_ObjectHideFlags: 0

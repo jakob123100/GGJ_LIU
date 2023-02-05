@@ -15,6 +15,7 @@ public class Actor : MonoBehaviour
 
 	protected void Die()
     {
+        GameController.Instance.EnemyKilled();
         Destroy(gameObject);
     }
 

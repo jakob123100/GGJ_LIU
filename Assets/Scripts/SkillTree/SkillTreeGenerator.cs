@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -16,6 +17,8 @@ public class SkillNode
 
 public class SkillTreeGenerator : MonoBehaviour
 {
+	public event EventHandler PickedSkill;
+
     [SerializeField] private Vector2 nodeOffset;
 	[SerializeField] private int TreeStartHeight = 2;
 	[SerializeField] private int TreeHeight = 0;
@@ -23,9 +26,62 @@ public class SkillTreeGenerator : MonoBehaviour
 
 	SkillNode[] skillTree;
 
+	private OnClickEvent leftButton = null;
+	private OnClickEvent rightButton = null;
+
+	#region Singleton
+	[HideInInspector] public static SkillTreeGenerator Instance;
+
+	private void OnEnable()
+	{
+		Instance = this;
+	}
+	#endregion
+
+	private void OnSkillPicked(EventArgs e)
+	{
+		if(leftButton != null)
+		{
+			Destroy(leftButton);
+		}
+		if(rightButton != null)
+		{
+			Destroy(rightButton);
+		}
+
+		PickedSkill?.Invoke(this, e);
+	}
+
+	private void OnLeftPicked(object sender, EventArgs e)
+	{
+		leftButton.Clicked -= OnLeftPicked;
+		TraverseLeft();
+	}
+
+	private void OnRightPicked(object sender, EventArgs e)
+	{
+		rightButton.Clicked -= OnRightPicked;
+		TraverseRight();
+	}
+
+	public void PickSkill()
+	{
+		if(skillTree.Length <= 2)
+		{
+			OnSkillPicked(null);
+			return;
+		}
+
+		leftButton = OnClickEvent.CreateComponent(skillTree[1].skillScript.gameObject);
+		rightButton = OnClickEvent.CreateComponent(skillTree[2].skillScript.gameObject);
+
+		leftButton.Clicked += OnLeftPicked;
+		rightButton.Clicked += OnRightPicked;
+	}
+
 	private GameObject GetRandomSkillObject()
     {
-        int randomIndex = Random.Range(0, skillPrefabs.Length);
+        int randomIndex = UnityEngine.Random.Range(0, skillPrefabs.Length);
         return skillPrefabs[randomIndex];
     }
 
@@ -49,10 +105,14 @@ public class SkillTreeGenerator : MonoBehaviour
 		skillTree = newTree;
 
 		UpdateSkillObjectsPos();
+
+		OnSkillPicked(EventArgs.Empty);
 	}
 
 	private void TraverseLeft()
 	{
+		skillTree[1].skillScript.ApplyModifiers();
+
 		SkillNode[] newTree = new SkillNode[skillTree.Length - TreeHeight];
 
 		int i = 0;
@@ -78,10 +138,14 @@ public class SkillTreeGenerator : MonoBehaviour
 		GenerateLevel();
 
 		UpdateSkillObjectsPos();
+
+		OnSkillPicked(EventArgs.Empty);
 	}
 
 	private void TraverseRight()
 	{
+		skillTree[2].skillScript.ApplyModifiers();
+
 		SkillNode[] newTree = new SkillNode[skillTree.Length - TreeHeight];
 
 		int i = 0;
@@ -132,7 +196,7 @@ public class SkillTreeGenerator : MonoBehaviour
 	}
 
 	// Start is called before the first frame update
-	void Start()
+	void Awake()
     {
         skillTree = new SkillNode[0];
 

@@ -67,7 +67,7 @@ public class Shoot : MonoBehaviour
 				bulletSpread = (float)(bulletSpread * modifier.value);
 				break;
 			case ModifierType.bulletAmount:
-				bulletAmount = (int)(bulletAmount + modifier.value);
+				bulletAmount = (bulletAmount + Mathf.RoundToInt((float)modifier.value));
 				break;
 			case ModifierType.projectileSpeed:
 				bulletSpeed = (float)(bulletSpeed * modifier.value);
@@ -164,6 +164,19 @@ public class Shoot : MonoBehaviour
         timeUntilNextBullet = (Time.time + ((0.2f * 10f) / reloadSpeed));
     }
 
+    private IEnumerator SubToModifierChange()
+    {
+        PlayerShit playerShit = null;
+
+        while (playerShit == null)
+        {
+            playerShit = PlayerShit.Instance;
+            yield return null;
+		}
+
+        playerShit.ModifierChange += ModifierChange;
+	}
+
     private void FixedUpdate()
     {
         if (Input.GetMouseButton(0) 
@@ -186,10 +199,7 @@ public class Shoot : MonoBehaviour
 
 	private void OnEnable()
 	{
-        if(PlayerShit.Instance != null)
-        {
-            PlayerShit.Instance.ModifierChange += ModifierChange;
-        }
+		StartCoroutine(SubToModifierChange());
 	}
 
 	private void OnDisable()

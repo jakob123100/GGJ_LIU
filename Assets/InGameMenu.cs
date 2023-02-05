@@ -2,13 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InGameMenu : MonoBehaviour
 {
-	[SerializeField] TextMeshProUGUI killCountText;
-
-	private void OnEnable()
+	public void Continue()
 	{
-		killCountText.text = $"Kill Count: {GameController.Instance.killCount}";
+		gameObject.SetActive(false);
+
+		Time.timeScale = 1f;
+	}
+
+	public void Restart()
+	{
+		SceneManager.LoadScene("I forgor");
+	}
+
+	public void GoToMainMenu()
+	{
+		SceneManager.LoadScene("MainMenu");
+	}
+
+	public void Quit()
+	{
+		Application.Quit();
 	}
 }

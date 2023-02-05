@@ -91,8 +91,6 @@ public class Shoot : MonoBehaviour
         {
 			flash.SetActive(true);
 
-            for (int i = 0; i < bulletAmount; i++)
-            {
                 currentBulletSpread = Mathf.Min(currentBulletSpread + bulletSpreadTime * Time.deltaTime, bulletSpread);
                 float direction = Random.Range(-currentBulletSpread, currentBulletSpread);
                 directionVector = transform.forward + transform.right * direction;
@@ -104,7 +102,8 @@ public class Shoot : MonoBehaviour
 
                 //TODO: add bullet amount
                 Bullet.CreateComponent(bullet, bulletSpeed, directionVector, damage, scale, parent: gameObject, destroyDelay: bulletLifetime, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
-            }
+
+            bulletsToFire--;
 
             float currentTime = 0;
             if (currentTime < Time.time)
@@ -119,7 +118,6 @@ public class Shoot : MonoBehaviour
                 movementScript.gameObject.transform.position += new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z);
             }
         }
-        bulletsToFire--;
 
         yield return new WaitForSeconds(Random.Range(0.05f, 0.15f));
     }

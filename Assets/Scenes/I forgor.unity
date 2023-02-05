@@ -1935,6 +1935,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7285528456378271786, guid: 0a945973c6a8e4945b02831ca4c796a4,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.69948
+      objectReference: {fileID: 0}
+    - target: {fileID: 7285528456378271786, guid: 0a945973c6a8e4945b02831ca4c796a4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.69948
+      objectReference: {fileID: 0}
+    - target: {fileID: 7285528456378271786, guid: 0a945973c6a8e4945b02831ca4c796a4,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.69948
+      objectReference: {fileID: 0}
+    - target: {fileID: 7285528456378271786, guid: 0a945973c6a8e4945b02831ca4c796a4,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.13
       objectReference: {fileID: 0}
@@ -3985,6 +4000,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Mushroom1 2 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346981588962139696, guid: 160d3f0b09b0e594ebf3130b97d5f9ac,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.49375272
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346981588962139696, guid: 160d3f0b09b0e594ebf3130b97d5f9ac,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.49375272
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346981588962139696, guid: 160d3f0b09b0e594ebf3130b97d5f9ac,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.49375272
       objectReference: {fileID: 0}
     - target: {fileID: 7285528456378271786, guid: 160d3f0b09b0e594ebf3130b97d5f9ac,
         type: 3}
@@ -10275,7 +10305,7 @@ AudioHighPassFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131084684}
   m_Enabled: 1
-  m_CutoffFrequency: 350
+  m_CutoffFrequency: 100
   m_HighpassResonanceQ: 1
 --- !u!169 &2131084692
 AudioLowPassFilter:
@@ -10292,7 +10322,7 @@ AudioLowPassFilter:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.7953615
+      value: 0.34060937
       inSlope: 0
       outSlope: 0
       tangentMode: 0

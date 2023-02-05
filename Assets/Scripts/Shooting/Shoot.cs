@@ -58,7 +58,7 @@ public class Shoot : MonoBehaviour
 				bulletLifetime = (float)(bulletLifetime * modifier.value);
 				break;
 			case ModifierType.fireRate:
-				fireRate = (float)(fireRate * modifier.value);
+				fireRate = (float)(fireRate / modifier.value);
 				break;
 			case ModifierType.knockback:
 				knockback = (float)(knockback * modifier.value);

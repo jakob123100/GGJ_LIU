@@ -7,8 +7,9 @@ public class GameController : MonoBehaviour
 {
 	[SerializeField] private GameObject SkillTree;
     [SerializeField] private int killsNeededForLevel = 10;
+	[SerializeField] private GameObject InGameMenu;
 
-    private int killCount = 0;
+    public int killCount = 0;
 
 	#region Singleton
 	[HideInInspector] public static GameController Instance;
@@ -43,5 +44,13 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	
+	private void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.Escape))
+		{
+			InGameMenu.SetActive(!InGameMenu.active);
+
+			Time.timeScale = InGameMenu.active ? 0 : 1;
+		}
+	}
 }

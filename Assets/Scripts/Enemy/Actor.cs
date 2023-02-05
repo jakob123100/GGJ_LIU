@@ -7,8 +7,11 @@ public class Actor : MonoBehaviour
     public int MaxHealth = 10;
 
 	[SerializeField] protected int health;
+    [SerializeField] private GameObject mat;
+    private float currentTime;
+    [SerializeField] private float flashTime;
 
-	protected bool IsDead()
+    protected bool IsDead()
     {
         return health <= 0;
     }
@@ -21,8 +24,14 @@ public class Actor : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        if(IsDead() )
+        if(mat != null)
+        {
+            currentTime = Time.time + flashTime;
+            health -= damage;
+            mat.GetComponent<Renderer>().material.color = Color.red;
+        }
+
+        if (IsDead() )
         {
             Die();
         }
@@ -31,5 +40,16 @@ public class Actor : MonoBehaviour
 	protected void Start()
 	{
         health = MaxHealth;
-	}
+    }
+
+    private void Update()
+    {
+        if (mat != null)
+        {
+            if (Time.time > currentTime)
+            {
+                mat.GetComponent<Renderer>().material.color = Color.white;
+            }
+        }
+    }
 }

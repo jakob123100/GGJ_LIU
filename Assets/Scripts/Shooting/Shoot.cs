@@ -186,7 +186,10 @@ public class Shoot : MonoBehaviour
 
 	private void OnEnable()
 	{
-        PlayerShit.Instance.ModifierChange += ModifierChange;
+        if(PlayerShit.Instance != null)
+        {
+            PlayerShit.Instance.ModifierChange += ModifierChange;
+        }
 	}
 
 	private void OnDisable()

@@ -11,7 +11,7 @@ public class DamageOnCollision : MonoBehaviour
 
 	private void OnCollisionStay(Collision collision)
 	{
-		Actor other = collision.gameObject.GetComponent<Actor>();
+		PlayerActor other = collision.gameObject.GetComponent<PlayerActor>();
 
 		if (other == null)
 		{

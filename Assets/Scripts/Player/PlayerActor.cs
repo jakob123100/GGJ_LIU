@@ -24,5 +24,13 @@ public class PlayerActor : Actor
 				health = MaxHealth;
 			}
 		}
+
+		if (mat != null)
+		{
+			if (Time.time > currentTime)
+			{
+				mat.GetComponent<Renderer>().material.color = Color.white;
+			}
+		}
 	}
 }

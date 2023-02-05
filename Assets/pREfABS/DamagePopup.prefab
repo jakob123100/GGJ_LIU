@@ -186,3 +186,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floatingUpSpeed: 4
+  floatingSideSpeed: 4
+  dissapearSpeed: 2
+  deathTimer: 0.7

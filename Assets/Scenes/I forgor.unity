@@ -3123,7 +3123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SkillTree: {fileID: 979707905}
-  killsNeededForLevel: 4
+  killsNeededForLevel: 10
 --- !u!4 &123115739
 Transform:
   m_ObjectHideFlags: 0
@@ -46733,7 +46733,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

@@ -42,7 +42,7 @@ public class Bullet : MonoBehaviour
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		if(collision.gameObject.tag == parentFaction || collision.gameObject.GetComponent<Bullet>() != null)
+		if(collision.gameObject.CompareTag(parentFaction) || collision.gameObject.GetComponent<Bullet>() != null)
         {
             return;
 		}

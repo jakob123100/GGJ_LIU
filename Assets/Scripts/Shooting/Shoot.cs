@@ -67,7 +67,7 @@ public class Shoot : MonoBehaviour
 				bulletSpread = (float)(bulletSpread * modifier.value);
 				break;
 			case ModifierType.bulletAmount:
-				bulletAmount = (int)(bulletAmount * modifier.value);
+				bulletAmount = (int)(bulletAmount + modifier.value);
 				break;
 			case ModifierType.projectileSpeed:
 				bulletSpeed = (float)(bulletSpeed * modifier.value);

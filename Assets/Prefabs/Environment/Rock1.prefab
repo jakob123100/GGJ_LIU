@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7285528456378271786}
   - component: {fileID: 98789229285171242}
   - component: {fileID: 7258455247960509779}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rock1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 5346981588962139696}
   - component: {fileID: 3908434595198818217}
   - component: {fileID: 1309171707351303440}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tree1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

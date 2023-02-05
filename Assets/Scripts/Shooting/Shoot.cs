@@ -22,7 +22,7 @@ public class Shoot : MonoBehaviour
 
     [SerializeField] private int magazineSize = 64;
     [SerializeField] private int damage;
-    [SerializeField] private int bulletAmount;
+    [SerializeField] private int bulletAmount = 2;
 
     private float currentBulletSpread;
     private float timeUntilNextBullet;
@@ -89,37 +89,39 @@ public class Shoot : MonoBehaviour
 
         while(bulletsToFire > 0)
         {
-			currentBulletSpread = Mathf.Min(currentBulletSpread + bulletSpreadTime * Time.deltaTime, bulletSpread);
-			float direction = Random.Range(-currentBulletSpread, currentBulletSpread);
-			directionVector = transform.forward + transform.right * direction;
-
 			flash.SetActive(true);
 
-			GameObject bullet = Instantiate(
-				objectToShoot,
-				transform.position,
-				Quaternion.LookRotation(directionVector));
+            for (int i = 0; i < bulletAmount; i++)
+            {
+                currentBulletSpread = Mathf.Min(currentBulletSpread + bulletSpreadTime * Time.deltaTime, bulletSpread);
+                float direction = Random.Range(-currentBulletSpread, currentBulletSpread);
+                directionVector = transform.forward + transform.right * direction;
 
-			//TODO: add bullet amount
-			Bullet.CreateComponent(bullet, bulletSpeed, directionVector, damage, scale, parent: gameObject, destroyDelay: bulletLifetime, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
+                GameObject bullet = Instantiate(
+                objectToShoot,
+                transform.position,
+                Quaternion.LookRotation(directionVector));
 
-			float currentTime = 0;
-			if (currentTime < Time.time)
-			{
-				pangSource.pitch = Random.Range(0.9f, 1.1f);
-				pangSource.PlayOneShot(pang, Random.Range(1.9f, 2.1f));
-				currentTime = Time.time + 0.2f;
-			}
+                //TODO: add bullet amount
+                Bullet.CreateComponent(bullet, bulletSpeed, directionVector, damage, scale, parent: gameObject, destroyDelay: bulletLifetime, speedOverLifetime: bulletSpeedOverLifetimeCurve_IAmGoodAtNamingThings);
+            }
 
-			if (!Physics.Raycast(movementScript.gameObject.transform.position, new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z), out RaycastHit hit, 1))
-			{
-				movementScript.gameObject.transform.position += new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z);
-			}
+            float currentTime = 0;
+            if (currentTime < Time.time)
+            {
+                pangSource.pitch = Random.Range(0.9f, 1.1f);
+                pangSource.PlayOneShot(pang, Random.Range(1.9f, 2.1f));
+                currentTime = Time.time + 0.2f;
+            }
 
-            bulletsToFire--;
-
-			yield return new WaitForSeconds(Random.Range(0.05f, 0.15f));
+            if (!Physics.Raycast(movementScript.gameObject.transform.position, new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z), out RaycastHit hit, 1))
+            {
+                movementScript.gameObject.transform.position += new Vector3(Time.deltaTime * knockback * -transform.forward.x, 0, Time.deltaTime * knockback * -transform.forward.z);
+            }
         }
+        bulletsToFire--;
+
+        yield return new WaitForSeconds(Random.Range(0.05f, 0.15f));
     }
 
     private void DoTheShoot()
